@@ -1,0 +1,66 @@
+/*滚动图片*/
+#fade_focus {
+	height: 160px;
+	width: 210px;
+	border: #666666 2px solid;
+	background-color: #656565;
+	font-family: '宋体';
+	position: relative;
+}
+
+.load {
+	text-align: center;
+	padding-top: 30px;
+}
+
+.fade_ul {
+	display: none;
+}
+
+/*框体样式*/
+.fade_focus_title {
+	text-align: center;
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	top: -1px;
+	background-color: #656565;
+	color: #FFFFFF;
+	font-size: 13px;
+	padding: 0px 0px;
+	height: 20px;
+	overflow: hidden;
+}
+
+.fade_focus_title span {
+	text-align: center;
+	display: inline-block;
+	height: 14px;
+	font-size: 12px;
+	overflow: hidden;
+}
+
+.fade_focus_button {
+	position: absolute;
+	z-index: 999;
+	right: 0px;
+	bottom: 0px;
+	font-size: 8px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.b1, .b2 {
+	background-color: #B6B6B6;
+	display: block;
+	float: left;
+	padding: 2px 6px;
+	margin-right: 3px;
+	color: #FFFFFF;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.b2 {
+	background-color: #000;
+}

@@ -1,0 +1,130 @@
+@charset "utf-8";
+
+td{
+    padding: 0px;
+}
+a {
+    text-decoration: none;
+    color: #555;
+}
+a:visited {
+    color: #555;
+}
+
+/*整页居中*/
+body {
+    width: 952px;
+    margin: auto;
+    color: #555;
+}
+
+/*页眉*/
+#header {
+    margin-bottom: 6px;
+}
+#header_menu {
+    height: 33px;
+    background: url(/image/menu.png);
+}
+#header_menu .header_menu_item {
+    font-family: "宋体";
+    font-size: 14px;
+    font-weight: bold;
+    width: 60px;
+    padding-left: 22px;
+    padding-right: 20px;
+    line-height: 33px;
+    background: url(/image/menu_separator.png) no-repeat right;
+    height: 33px;
+    text-align: center;
+}
+#header_menu .header_menu_item a {
+    color: #fff;
+    text-decoration: none;
+}
+#thx {
+    float: right;
+    margin-top: 9px;
+}
+#thx_message {
+    display: none;
+    font-weight:bold;
+    line-height:20px;
+    font-size: 12px;
+    font-family: "宋体";
+}
+
+/*页脚*/
+#footer_seperator {
+    clear: both;
+    border-bottom: #D5D2D2 solid 3px;
+    margin-bottom: 10px;
+    height: 10px;
+}
+#footer {
+    font-size: 12px;
+    color: #000;
+    background: url(/image/bg_footer.png);
+    line-height: 20px;
+    text-align: center;
+}
+
+/*中间框体*/
+.frame {
+    border: #AACCEE solid 1px;
+}
+#left .frame {
+    border: #D5D2D2 solid 1px;
+}
+
+.frame_head {
+    height: 33px;
+    background: url(/image/right_header.png);
+}
+#left .frame_head {
+    background-color: #EFEFEF;
+}
+.frame_name {
+    line-height: 33px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #002776;
+    padding-left: 10px;
+}
+#left .frame_name {
+    color: #484848;
+    background: url(/image/dot_title.png) no-repeat 10px -9px;
+    padding-left: 35px;
+}
+#right .frame_name {
+    background: url(/image/dot_right.png) no-repeat 10px -9px;
+    padding-left: 35px;
+}
+.frame_more {
+    float: right;
+    margin-top: 9px;
+}
+
+.frame_body {
+    margin: 10px;
+}
+.frame_body ul {
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.frame_body li {
+    list-style: none;
+    line-height: 25px;
+    color: #555;
+}
+
+/*左栏*/
+#left {
+    float: left;
+}
+
+/*右栏*/
+#right {
+    float: right;
+}
