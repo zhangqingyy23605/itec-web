@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
  * Created by xsh on 2015/4/30.
  */
+
+//TODO CategoryTree查询优化
 
 @Controller
 @RequestMapping("/news")
@@ -20,7 +24,6 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
 
-    static final int initPageNumber = 1;
     static final private int pageSize = 8;
     static final private String columnName = "新闻中心";
 //    static private NewsCategory rootCategory;
@@ -30,13 +33,16 @@ public class NewsController {
         //循环，放入Map中
 //    }
 
-    @ModelAttribute("page")
-    public Page initPage() {
-        Page page = new Page();
-        page.setPageSize(this.pageSize);
-        page.setColumnName(this.columnName);
-        page.setCategoryName(this.columnName);
-        page.setPageNumber(this.initPageNumber);
+    @ModelAttribute
+    public Page preparePage(HttpSession session){
+        Page page = (Page)session.getAttribute("page");
+        if (page == null || page.getColumnName() != columnName) {
+            page = new Page();
+            page.setPageSize(this.pageSize);
+            page.setColumnName(this.columnName);
+            page.setCategoryName(this.columnName);
+            session.setAttribute("page", page);
+        }
         return page;
     }
 
@@ -46,11 +52,10 @@ public class NewsController {
             model.addAttribute("newsList", newsList);
             return "/news/list";
     }
-    @RequestMapping(params = "categoryName")//入口
-    public String chooseCategory(ModelMap model, @RequestParam String categoryName) {
-        Page page = this.initPage();
+    @RequestMapping(params = "categoryName")
+    public String chooseCategory(@ModelAttribute Page page, @RequestParam String categoryName) {
         page.setCategoryName(categoryName);
-        model.addAttribute("page", page);//无视Session中是否已经存在page，直接放一个新的page
+        page.setPageNumber(1);
         return "redirect:/news";
     }
     @RequestMapping(params = {"pageAction", "!categoryName", })

@@ -18,7 +18,7 @@ public class NewsDAOImpl implements NewsDAO {
     private SessionFactory sessionFactory;
 
     public void saveLeaves(NewsCategory rootNewsCategory, List<NewsCategory> category_leaves) {
-        if (rootNewsCategory == null) { //TODO 名称不全有bug
+        if (rootNewsCategory == null) { //TODO 名称在数据库中不存在时有bug
             return;
         }
         else if (rootNewsCategory.getChildren().isEmpty()) {

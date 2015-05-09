@@ -5,14 +5,13 @@ package edu.hust.itec.util;
  */
 public class Page {
     private int pageSize = 10;
-    private String columnName;
-
-    private String categoryName;
     private int pageNumber = 1;
+    private String columnName;
+    private String categoryName;
     private String pageAction;
 
-    private int numberOfRecords;//TODO 考虑如何优化
-    private int numberOfPages;
+    private int numberOfRecords;
+    private int numberOfPages;// TODO 如果有20页，下面页码导航会过于长
     private int firstResult;
 
     public void autoSetPageNumberAndFirstResult() {
@@ -88,10 +87,6 @@ public class Page {
 
     public void setColumnName(String columnName) {
         this.columnName = columnName;
-    }
-
-    public String getPageAction() {
-        return pageAction;
     }
 
     public void setPageAction(String pageAction) {

@@ -1,11 +1,13 @@
 package edu.hust.itec.model;
 
-import org.hibernate.annotations.Index;
 import javax.persistence.*;
 import java.util.Date;
 
 
 @Entity
+@Table(indexes = {
+        @Index(columnList = "addDate")
+})
 public class News {
     @Id
     @GeneratedValue
@@ -20,9 +22,9 @@ public class News {
 
     @Column(columnDefinition = "DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
-    @Index(name = "addDate", columnNames = "addDate")
     private Date addDate;
 
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String content;
 
     private String editor;
