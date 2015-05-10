@@ -3,11 +3,17 @@ package edu.hust.itec.service;
 import edu.hust.itec.model.News;
 import edu.hust.itec.model.NewsCategory;
 import edu.hust.itec.util.Page;
-
-import java.util.List;
+import java.util.*;
 
 public interface NewsService {
-    List<News> getNewsList(Page page);
 
-    News getNewsById(int id);
+    //News
+    List<News> getList(Page page);
+
+    News getItemById(int id);
+
+//    void addItem(News news);
+
+    //Category
+    void initCategoryMap(String columnName);
 }

@@ -7,7 +7,7 @@
     <link href="/frontend/css/list.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<%@ include file="/WEB-INF/view/common/header_part.html" %>
+<%@ include file="/WEB-INF/view/common/header_part.jsp" %>
 <div id="left">
     <div class="frame">
         <div class="frame_head">
@@ -36,7 +36,7 @@
         </div>
         <div class="frame_body bullet_right">
         <c:choose>
-        <c:when test="${newsList.isEmpty()}">
+        <c:when test="${empty newsList}">
             <div style="text-align: center">暂无数据</div>
         </div>
         </c:when>
@@ -70,6 +70,7 @@
         <div id="pagination">
             共${page.numberOfRecords}条
             第${page.pageNumber}/${page.numberOfPages}页
+            <span class="pagination_item"><a href="/news/add">新增</a></span>
             <span class="pagination_item"><a href="/news?pageAction=first">首页</a></span>
             <span class="pagination_item"><a href="/news?pageAction=previous">上一页</a></span>
             <c:forEach begin="1" end="${page.numberOfPages}" var="index">

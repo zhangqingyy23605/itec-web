@@ -20,13 +20,14 @@
         <!--<url-pattern>/*</url-pattern>-->
     <!--</filter-mapping>-->
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/applicationContext.xml</param-value>
-    </context-param>
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
+    <filter>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <servlet-name>/*</servlet-name>
+    </filter-mapping>
 
     <servlet>
         <servlet-name>dispatcher</servlet-name>
@@ -42,11 +43,20 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
             <page-encoding>UTF-8</page-encoding>
             <default-content-type>text/html</default-content-type>
+            <trim-directive-whitespaces>true</trim-directive-whitespaces>
         </jsp-property-group>
         <jsp-property-group>
             <url-pattern>*.html</url-pattern>

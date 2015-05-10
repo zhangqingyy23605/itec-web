@@ -7,10 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Repository("newsDAO")
 public class NewsDAOImpl implements NewsDAO {
@@ -30,7 +28,8 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
-    public List<News> getNewsList(String categoryName, int firstResult, int pageSize) {
+    @SuppressWarnings("unchecked")
+    public List<News> getList(String categoryName, int firstResult, int pageSize) {
         Session session = this.sessionFactory.getCurrentSession();
 
         Query query = session.createQuery("select nc from NewsCategory nc where name=:name");
@@ -48,8 +47,7 @@ public class NewsDAOImpl implements NewsDAO {
 //        Query query2 = session.createQuery("select new News(news.heading, news.addDate) from News news");
         query2.setFirstResult(firstResult);
         query2.setMaxResults(pageSize);
-        List<News> newsList = (List<News>)query2.list();
-        return newsList;
+        return (List<News>)query2.list();
     }
 
     public int getNumberOfRecords(String categoryName) {
@@ -61,17 +59,24 @@ public class NewsDAOImpl implements NewsDAO {
         this.saveLeaves(rootNewsCategory, category_leaves);
         Query query2 = session.createQuery("select count(*) from News news where news.category in :category_leaves");
         query2.setParameterList("category_leaves", category_leaves);
-        int numberOfNews = ((Long)query2.uniqueResult()).intValue();
-
+        return ((Long)query2.uniqueResult()).intValue();
 //        Query query = session.createQuery("select count(*) from News news");
 //        int numberOfNews = ((Long)query.uniqueResult()).intValue();
-        return numberOfNews;
     }
 
-    public News getNewsById(int id) {
+    public News getItemById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         return (News)session.get(News.class, id);
     }
+
+    //取得该分类和他的子树，以及每个子分类对应的所有叶子
+    public NewsCategory getCategoryByName(String categoryName) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Query query = session.createQuery("select nc from NewsCategory nc where name=:name");
+        query.setString("name", categoryName);
+        return (NewsCategory)query.uniqueResult();
+    }
+
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

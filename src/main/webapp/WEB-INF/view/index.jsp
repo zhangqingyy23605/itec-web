@@ -7,12 +7,12 @@
     <link href="/frontend/css/index.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<%@ include file="/WEB-INF/view/common/header_part.html" %>
+<%@ include file="/WEB-INF/view/common/header_part.jsp" %>
 <div id="left">
     <div class="frame">
         <div class="frame_head">
             <span class="frame_name">通知公告</span>
-            <span class="frame_more"><a href="/news?categoryName=通知公告"><img src="/image/more.png" /></a></span>
+            <span class="frame_more"><a href="/news?categoryName=通知公告"><img src="/image/more_left.png" /></a></span>
         </div>
         <div class="frame_body bullet_left_head">
             <ul>
@@ -46,7 +46,7 @@
     <div class="frame">
         <div class="frame_head">
             <span class="frame_name">热点新闻</span>
-            <span class="frame_more"><a href="/news?categoryName=热点新闻"><img src="/image/more.png" /></a></span>
+            <span class="frame_more"><a href="/news?categoryName=热点新闻"><img src="/image/more_right.png" /></a></span>
         </div>
         <div>
             <table>

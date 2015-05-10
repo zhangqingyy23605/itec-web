@@ -1,13 +1,15 @@
 package edu.hust.itec.dao;
 
 import edu.hust.itec.model.News;
-
-import java.util.List;
+import edu.hust.itec.model.NewsCategory;
+import java.util.*;
 
 public interface NewsDAO {
-    List<News> getNewsList(String categoryName, int start, int pageSize);
+    List<News> getList(String categoryName, int start, int pageSize);
 
     int getNumberOfRecords(String categoryName);
 
-    News getNewsById(int id);
+    News getItemById(int id);
+
+    NewsCategory getCategoryByName(String categoryName);
 }

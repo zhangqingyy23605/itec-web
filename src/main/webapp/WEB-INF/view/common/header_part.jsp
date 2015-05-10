@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!-- Add jQuery library -->
 <script type="text/javascript" src="/frontend/lib/jquery-1.10.1.min.js"></script>
 <!-- Add fancyBox -->
@@ -37,9 +39,14 @@
         <span class="header_menu_item">
             <a href="/libraryAction!library">图书馆</a>
         </span>
-        <span class="header_menu_item">
-            <a href="/page/admin/login.jsp">登录</a>
-        </span>
+            <span class="header_menu_item">
+                <a href="/auth">
+                    <c:choose>
+                        <c:when test="${user == null}">登录</c:when>
+                        <c:otherwise>注销${user.username}</c:otherwise>
+                    </c:choose>
+                </a>
+            </span>
         <span id="thx">
             <a href="#thx_message" class="fancybox"><img src="/image/thx.png" /></a>
             <div id="thx_message">

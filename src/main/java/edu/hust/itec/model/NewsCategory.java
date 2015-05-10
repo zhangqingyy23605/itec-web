@@ -5,10 +5,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
+@Table(indexes = {
+        @Index(columnList = "name")
+})
 public class NewsCategory {
     @Id
     @GeneratedValue
-    @Column
     private int id;
 
     @Column(unique = true)
@@ -23,6 +25,9 @@ public class NewsCategory {
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
     private List<NewsCategory> children;
+
+    @Transient
+    private List<String> leavesName = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -53,5 +58,13 @@ public class NewsCategory {
 
     public void setParent(NewsCategory parent) {
         this.parent = parent;
+    }
+
+    public List<String> getLeavesName() {
+        return leavesName;
+    }
+
+    public void addLeavesName(String leafName) {
+        this.leavesName.add(leafName);
     }
 }

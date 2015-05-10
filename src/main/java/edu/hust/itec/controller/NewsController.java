@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -19,19 +20,17 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/news")
-@SessionAttributes({"page"})
 public class NewsController {
     @Autowired
     private NewsService newsService;
 
     static final private int pageSize = 8;
     static final private String columnName = "新闻中心";
-//    static private NewsCategory rootCategory;
-//    static {
-//        System.out.println("记载Action");
-//        rootCategory = newsAction.newsService.getCategoryTree(columnName);
-        //循环，放入Map中
-//    }
+
+    @PostConstruct
+    public void initCategoryMap() {
+        newsService.initCategoryMap(this.columnName);
+    }
 
     @ModelAttribute
     public Page preparePage(HttpSession session){
@@ -47,8 +46,8 @@ public class NewsController {
     }
 
     @RequestMapping
-    public String newsList(@ModelAttribute Page page, ModelMap model) {
-            List<News> newsList = this.newsService.getNewsList(page);
+    public String list(@ModelAttribute Page page, ModelMap model) {
+            List<News> newsList = this.newsService.getList(page);
             model.addAttribute("newsList", newsList);
             return "/news/list";
     }
@@ -70,9 +69,37 @@ public class NewsController {
     }
 
     @RequestMapping("/{newsId}")
-    public String newsItem(ModelMap model, @PathVariable int newsId) {
-        News newsItem = this.newsService.getNewsById(newsId);
-        model.addAttribute("newsItem", newsItem);
+    public String item(@PathVariable int newsId, ModelMap model) {
+        News news = this.newsService.getItemById(newsId);
+        model.addAttribute("news", news);
         return "/news/item";
     }
+
+    @RequestMapping("/add")
+    public String addItemView(ModelMap model) {
+//        if (categoryList == null) {
+//            categoryList = newsService.getCategoryByName();
+//        }
+//        model.put("categoryList", categoryList);
+        return "news/item_input";
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String addItem(News news) {
+        System.out.println(news);
+//        newsService.
+        return "redirect:/news";
+    }
+//
+//    @ModelAttribute
+//    public News prepareNews(@PathVariable int newsId){
+//        News news = newsService.getItemById(newsId);
+//        return news;
+//    }
+//
+//    @RequestMapping("/{newsId}/edit")
+//    public String editItem(@ModelAttribute News news) {
+//        //放入已有数据
+//        return "/news/item_edit";
+//    }
 }

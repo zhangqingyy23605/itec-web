@@ -7,7 +7,7 @@
     <link href="/frontend/css/item.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<%@ include file="/WEB-INF/view/common/header_part.html" %>
+<%@ include file="/WEB-INF/view/common/header_part.jsp" %>
 <div class="frame">
     <div class="frame_head">
         <span class="frame_name">新闻内容</span>
@@ -15,20 +15,20 @@
     <div class="frame_body">
 
     <c:choose>
-    <c:when test="${newsItem == null}">
+    <c:when test="${empty news}">
         <div style="text-align: center">
             新闻id不存在
         </div>
     </c:when>
     <c:otherwise>
         <div class="news_title">
-                ${newsItem.heading}
+                ${news.heading}
         </div>
         <div class="news_info">
-            日期：<fmt:formatDate value="${newsItem.addDate}" pattern="yyyy-M-d"/>&nbsp作者：${newsItem.editor}
+            日期：<fmt:formatDate value="${news.addDate}" pattern="yyyy-M-d"/>&nbsp作者：${news.editor}
         </div>
         <div class="news_content">
-            <c:out value="${newsItem.content}" escapeXml="false"/>
+            <c:out value="${news.content}" escapeXml="false"/>
         </div>
     </c:otherwise>
     </c:choose>

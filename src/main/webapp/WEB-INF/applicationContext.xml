@@ -10,7 +10,10 @@
        ">
 
     <context:annotation-config/>
-    <context:component-scan base-package="edu.hust.itec"/>
+    <context:component-scan base-package="
+        edu.hust.itec.service,
+        edu.hust.itec.dao,
+        edu.hust.itec.model"/>
     <context:property-placeholder location="/WEB-INF/db.properties"/>
 
     <bean id="datasource" destroy-method="close" class="com.mchange.v2.c3p0.ComboPooledDataSource">

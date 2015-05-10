@@ -79,10 +79,12 @@ body {
 
 .frame_head {
     height: 33px;
-    background: url(/image/right_header.png);
 }
 #left .frame_head {
     background-color: #EFEFEF;
+}
+#right .frame_head {
+    background: url(/image/right_header.png);
 }
 .frame_name {
     line-height: 33px;
