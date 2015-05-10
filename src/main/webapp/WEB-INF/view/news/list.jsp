@@ -67,7 +67,8 @@
                                         </li>
                                     </ul>
                                 </td>
-                                <td width="100px" align="right"><a href="/news/${news.id}" class="delete">[删除]</a></td>
+                                <td width="50px" align="right"><a href="/news/${news.id}/edit">[编辑]</a></td>
+                                <td width="50px" align="right"><a href="/news/${news.id}" class="delete">[删除]</a></td>
                                 <td width="100px" align="right">[<fmt:formatDate value="${news.addDate}" pattern="yyyy-M-d"/>]</td>
                             </tr>
                             <tr>

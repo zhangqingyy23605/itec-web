@@ -11,14 +11,31 @@
 <%@ include file="/WEB-INF/view/common/header_part.jsp" %>
 <div class="frame">
     <div class="frame_head">
-        <span class="frame_name">添加/编辑新闻</span>
+        <span class="frame_name">
+            <c:if test="${news.id == null}">添加新闻</c:if>
+            <c:if test="${news.id != null}">编辑新闻</c:if>
+        </span>
     </div>
     <div class="frame_body">
-        <form:form action="/news" method="post" modelAttribute="news">
+        <%@ page import="edu.hust.itec.model.News" %>
+        <%
+            String actionUrl = "/news";
+            News news = (News)request.getAttribute("news");
+            if (news.getId() != null) {
+                actionUrl += "/" + news.getId();
+            }
+        %>
+        <form:form action="<%=actionUrl%>" method="post" modelAttribute="news">
             类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/><br/>
             标题<form:input path="heading" /><br/>
             内容<form:textarea path="content" rows="10" cols="30" ></form:textarea><br/>
-            编辑<form:input path="editor" value="${sessionScope.user.id}"/><br/>
+            <c:if test="${news.id == null}">
+                作者<form:input path="editor" value="${sessionScope.user.id}"/><br/>
+            </c:if>
+            <c:if test="${news.id != null}">
+                <%--<form:hidden path="id"/>--%>
+                <input type="hidden" name="_method" value="put"/>
+            </c:if>
             <input type="submit" value="提交">
         </form:form>
     </div>

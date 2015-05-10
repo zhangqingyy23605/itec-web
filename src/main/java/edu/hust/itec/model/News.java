@@ -12,7 +12,7 @@ import java.util.Date;
 public class News {
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
 //    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,11 +42,11 @@ public class News {
         this.addDate = addDate;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

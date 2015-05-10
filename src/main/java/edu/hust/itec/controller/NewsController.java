@@ -98,9 +98,26 @@ public class NewsController {
 //        return news;
 //    }
 //
-//    @RequestMapping("/{newsId}/edit")
-//    public String editItem(@ModelAttribute News news) {
-//        //放入已有数据
-//        return "/news/item_edit";
-//    }
+    @RequestMapping(value = "/{newsId}/edit", method = RequestMethod.GET)
+    public String editItemView(@PathVariable int newsId, ModelMap model) {
+        //放入已有数据
+        model.addAttribute("news", newsService.getItemById(newsId));
+        model.addAttribute("categoryList", newsService.getCategoryList());
+        return "/news/item_input";
+    }
+
+    @ModelAttribute//这里的RequestParam包含POST报文中的Param
+    public void getNews(@RequestParam(value = "newsId", required = false) Integer newsId, ModelMap model) {
+        if(newsId != null) {
+            //是修改操作
+            model.addAttribute("news", this.newsService.getItemById(newsId));
+        }
+    }
+    @RequestMapping(value = "/{newsId}", method = RequestMethod.PUT)
+    public String editItem(@PathVariable Integer newsId, News news) {
+        news.setId(newsId);
+        //newsService.updateItem(news);
+        System.out.println(news);
+        return "redirect:/news/" + news.getId();
+    }
 }
