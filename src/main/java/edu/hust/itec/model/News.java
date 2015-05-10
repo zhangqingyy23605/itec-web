@@ -37,9 +37,9 @@ public class News {
     }
 
     public News(String heading, Date addDate, int id) {
+        this.id = id;
         this.heading = heading;
         this.addDate = addDate;
-        this.id = id;
     }
 
     public int getId() {

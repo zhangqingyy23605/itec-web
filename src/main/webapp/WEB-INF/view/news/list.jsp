@@ -8,6 +8,18 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/view/common/header_part.jsp" %>
+<script type="text/javascript">
+    $(function(){
+        $(".delete").click(function() {
+            var href = $(this).attr("href");
+            $("form").attr("action", href).submit();
+            return false;
+        })
+    })
+</script>
+<form method="post">
+    <input type="hidden" name="_method" value="delete"/>
+</form>
 <div id="left">
     <div class="frame">
         <div class="frame_head">
@@ -54,12 +66,12 @@
                                             </a>
                                         </li>
                                     </ul>
-
                                 </td>
+                                <td width="100px" align="right"><a href="/news/${news.id}" class="delete">[删除]</a></td>
                                 <td width="100px" align="right">[<fmt:formatDate value="${news.addDate}" pattern="yyyy-M-d"/>]</td>
                             </tr>
                             <tr>
-                                <td height="3px" colspan="2"
+                                <td height="3px" colspan="10"
                                     style="background:url(/image/right_seperator.png)"></td>
                             </tr>
                         </table>
@@ -93,4 +105,5 @@
     </div>
 </div>
 <%@ include file="/WEB-INF/view/common/footer_part.html" %>
+</body>
 </html>

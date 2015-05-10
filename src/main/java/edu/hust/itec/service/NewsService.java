@@ -7,12 +7,13 @@ import java.util.*;
 
 public interface NewsService {
 
-    //News
+    //list
     List<News> getList(Page page);
 
+    //item
     News getItemById(int id);
-
-//    void addItem(News news);
+    void addItem(News news);
+    void deleteItemById(int id);
 
     //Category
     void initCategoryMap(String columnName);

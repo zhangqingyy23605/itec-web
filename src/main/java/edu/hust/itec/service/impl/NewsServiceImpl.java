@@ -16,7 +16,7 @@ public class NewsServiceImpl implements NewsService {
     @Resource
     private NewsDAO newsDAO;
 
-    //News
+    //list
     public List<News> getList(Page page) {
         String categoryName = page.getCategoryName();
         NewsCategory newsCategory = categoryMap.get(categoryName);
@@ -32,22 +32,30 @@ public class NewsServiceImpl implements NewsService {
         return newsDAO.getList(categoryIds, firstResult, pageSize);
     }
 
+    //item
     public News getItemById(int id) {
         //newsDAO.addVisitTimeById(id);
         return newsDAO.getItemById(id);
+    }
+    public void addItem(News news) {
+        newsDAO.addItem(news);
+    }
+    public void deleteItemById(int id) {
+        newsDAO.deleteItemById(id);
     }
 
     //Category
     private Map<String, NewsCategory> categoryMap = new HashMap<>();
     private List<NewsCategory> categoryList = new ArrayList<>();
     public void initCategoryMap(String columnName) {
+        System.out.println("开始加载\"" + columnName + "\"分类信息");
         NewsCategory rootNewsCategory = newsDAO.getCategoryByName(columnName);
         if (rootNewsCategory == null) {
-            System.out.println("数据库中不存在\"" + columnName + "\"栏目的分类信息！");
+            System.out.println("数据库中不存在\"" + columnName + "\"的分类信息！");
         } else {
             extractLeavesToCategoryMap(rootNewsCategory, this.categoryMap);
             extractLeavesToCategoryList(this.categoryMap, this.categoryList);
-            System.out.println("\"" + columnName + "\"分类初始化完成");
+            System.out.println("成功加载\"" + columnName + "\"分类信息");
         }
     }
     private void extractLeavesToCategoryMap(NewsCategory rootCategory, Map<String, NewsCategory> categoryMap) {

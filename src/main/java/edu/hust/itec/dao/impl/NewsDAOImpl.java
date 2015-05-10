@@ -15,6 +15,7 @@ public class NewsDAOImpl implements NewsDAO {
     @Resource
     private SessionFactory sessionFactory;
 
+    //list
     @SuppressWarnings("unchecked")
     public List<News> getList(List<Integer> categoryIds, int firstResult, int pageSize) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -34,12 +35,23 @@ public class NewsDAOImpl implements NewsDAO {
         return ((Long)query.uniqueResult()).intValue();
     }
 
+    //item
     public News getItemById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         return (News)session.get(News.class, id);
     }
+    public void addItem(News news) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.persist(news);
+    }
+    public void deleteItemById(int id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Query query = session.createQuery("delete News n where n.id = :id");
+        query.setInteger("id", id);
+        query.executeUpdate();
+    }
 
-    //取得该分类和他的子树，以及每个子分类对应的所有叶子
+    //category
     public NewsCategory getCategoryByName(String categoryName) {
         Session session = this.sessionFactory.getCurrentSession();
         Query query = session.createQuery("select nc from NewsCategory nc where name=:name");

@@ -5,11 +5,15 @@ import edu.hust.itec.model.NewsCategory;
 import java.util.*;
 
 public interface NewsDAO {
+    //list
     List<News> getList(List<Integer> categoryIds, int start, int pageSize);
-
     int getNumberOfItems(List<Integer> categoryIds);
 
+    //item
     News getItemById(int id);
+    void addItem(News news);
+    void deleteItemById(int id);
 
+    //category
     NewsCategory getCategoryByName(String categoryName);
 }

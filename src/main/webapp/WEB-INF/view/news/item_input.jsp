@@ -14,21 +14,12 @@
         <span class="frame_name">添加/编辑新闻</span>
     </div>
     <div class="frame_body">
-        <%--<form action="/news" method="post">--%>
-        <%--</form>--%>
-        <form:form action="/news" method="POST" modelAttribute="news">
-            <%--类别<input type="text" name="category.id" /><br/>--%>
-            <%--标题<input type="text" name="heading" /><br/>--%>
-            <%--内容<textarea name="content" rows="10" cols="30" ></textarea><br/>--%>
-            <%--作者<input type="text" name="editor" /><br/>--%>
-            <%--<input type="submit" value="提交">--%>
-
+        <form:form action="/news" method="post" modelAttribute="news">
             类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/><br/>
             标题<form:input path="heading" /><br/>
             内容<form:textarea path="content" rows="10" cols="30" ></form:textarea><br/>
             编辑<form:input path="editor" value="${sessionScope.user.id}"/><br/>
             <input type="submit" value="提交">
-
         </form:form>
     </div>
 </div>

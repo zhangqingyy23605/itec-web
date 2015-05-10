@@ -19,8 +19,6 @@ import java.util.List;
  * Created by xsh on 2015/4/30.
  */
 
-//TODO CategoryTree查询优化
-
 @Controller
 @RequestMapping("/auth")
 @SessionAttributes("user")

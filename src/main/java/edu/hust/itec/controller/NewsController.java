@@ -16,8 +16,6 @@ import java.util.List;
  * Created by xsh on 2015/4/30.
  */
 
-//TODO CategoryTree查询优化
-
 @Controller
 @RequestMapping("/news")
 public class NewsController {
@@ -46,7 +44,7 @@ public class NewsController {
     }
 
     @RequestMapping
-    public String list(@ModelAttribute Page page, ModelMap model) {
+    public String getList(@ModelAttribute Page page, ModelMap model) {
             List<News> newsList = this.newsService.getList(page);
             model.addAttribute("newsList", newsList);
             return "/news/list";
@@ -68,8 +66,8 @@ public class NewsController {
         return "redirect:/news";
     }
 
-    @RequestMapping("/{newsId}")
-    public String item(@PathVariable int newsId, ModelMap model) {
+    @RequestMapping(value = "/{newsId}", method = RequestMethod.GET)
+    public String getItem(@PathVariable int newsId, ModelMap model) {
         News news = this.newsService.getItemById(newsId);
         model.addAttribute("news", news);
         return "/news/item";
@@ -78,17 +76,22 @@ public class NewsController {
     @RequestMapping("/add")
     public String addItemView(ModelMap model) {
         model.addAttribute("categoryList", newsService.getCategoryList());
-        model.addAttribute("news", new News());
+        model.addAttribute("news", new News());//TODO news editor 由改为 User类型的 editor_id
         return "news/item_input";
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String addItem(News news) {
-        System.out.println(news);
-//        newsService.
+        newsService.addItem(news);
         return "redirect:/news";
     }
-//
+
+    @RequestMapping(value = "/{newsId}", method = RequestMethod.DELETE)
+    public String deleteItem(@PathVariable int newsId) {
+        this.newsService.deleteItemById(newsId);
+        return "redirect:/news";
+    }
+
 //    @ModelAttribute
 //    public News prepareNews(@PathVariable int newsId){
 //        News news = newsService.getItemById(newsId);
