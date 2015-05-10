@@ -6,7 +6,8 @@ import java.util.Date;
 
 @Entity
 @Table(indexes = {
-        @Index(columnList = "addDate")
+        @Index(columnList = "addDate"),
+        @Index(columnList = "category_id")
 })
 public class News {
     @Id

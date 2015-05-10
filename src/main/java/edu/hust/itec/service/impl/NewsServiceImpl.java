@@ -1,6 +1,5 @@
 package edu.hust.itec.service.impl;
 
-import com.sun.jmx.remote.internal.ArrayQueue;
 import edu.hust.itec.dao.NewsDAO;
 import edu.hust.itec.model.News;
 import edu.hust.itec.model.NewsCategory;
@@ -20,12 +19,17 @@ public class NewsServiceImpl implements NewsService {
     //News
     public List<News> getList(Page page) {
         String categoryName = page.getCategoryName();
-        int numberOfRecords = newsDAO.getNumberOfRecords(categoryName);
+        NewsCategory newsCategory = categoryMap.get(categoryName);
+        if (newsCategory == null) {//如果参数错误，就用默认值
+            newsCategory = categoryMap.get(page.getColumnName());
+        }
+        List<Integer> categoryIds = newsCategory.getLeavesId();
+        int numberOfRecords = newsDAO.getNumberOfItems(categoryIds);
         page.setNumberOfRecordsAndPages(numberOfRecords);
         //需要先知道有多少页后，才能知道当前访问的页码是否有问题，并且从数据库第几条开始查询
         int firstResult = page.getFirstResult();
         int pageSize = page.getPageSize();
-        return newsDAO.getList(categoryName, firstResult, pageSize);
+        return newsDAO.getList(categoryIds, firstResult, pageSize);
     }
 
     public News getItemById(int id) {
@@ -42,6 +46,7 @@ public class NewsServiceImpl implements NewsService {
             System.out.println("数据库中不存在\"" + columnName + "\"栏目的分类信息！");
         } else {
             extractLeavesToCategoryMap(rootNewsCategory, this.categoryMap);
+            System.out.println("\"" + columnName + "\"分类初始化完成");
         }
     }
     private void extractLeavesToCategoryMap(NewsCategory rootCategory, Map<String, NewsCategory> categoryMap) {
@@ -56,14 +61,14 @@ public class NewsServiceImpl implements NewsService {
             List<NewsCategory> children = currentCategory.getChildren();
             if (children.isEmpty()) {
                 //如果某个节点没有孩子，就用parent向上找所有的祖先，放入他们的leaves中。
-                String leafName = currentCategory.getName();
+                int leafId = currentCategory.getId();
 
                 NewsCategory upperCategory = currentCategory;
-                upperCategory.addLeavesName(leafName);
+                upperCategory.addLeafId(leafId);
 
                 while(upperCategory.getParent() != null) {
                     upperCategory = upperCategory.getParent();
-                    upperCategory.addLeavesName(leafName);
+                    upperCategory.addLeafId(leafId);
                 }
             } else {
                 for (NewsCategory subRootNewsCategory : children) {
@@ -71,9 +76,6 @@ public class NewsServiceImpl implements NewsService {
                 }
             }
         }
-
-        System.out.println("分类树完成");
-
     }
 
     //getter and setter

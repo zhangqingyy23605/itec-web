@@ -5,9 +5,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
-@Table(indexes = {
-        @Index(columnList = "name")
-})
+//@Table(indexes = {
+//        @Index(columnList = "name")
+//})
 public class NewsCategory {
     @Id
     @GeneratedValue
@@ -27,7 +27,7 @@ public class NewsCategory {
     private List<NewsCategory> children;
 
     @Transient
-    private List<String> leavesName = new ArrayList<>();
+    private List<Integer> leavesId = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -60,11 +60,11 @@ public class NewsCategory {
         this.parent = parent;
     }
 
-    public List<String> getLeavesName() {
-        return leavesName;
+    public List<Integer> getLeavesId() {
+        return leavesId;
     }
 
-    public void addLeavesName(String leafName) {
-        this.leavesName.add(leafName);
+    public void addLeafId(int leafId) {
+        this.leavesId.add(leafId);
     }
 }

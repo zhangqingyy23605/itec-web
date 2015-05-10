@@ -5,9 +5,9 @@ import edu.hust.itec.model.NewsCategory;
 import java.util.*;
 
 public interface NewsDAO {
-    List<News> getList(String categoryName, int start, int pageSize);
+    List<News> getList(List<Integer> categoryIds, int start, int pageSize);
 
-    int getNumberOfRecords(String categoryName);
+    int getNumberOfItems(List<Integer> categoryIds);
 
     News getItemById(int id);
 
