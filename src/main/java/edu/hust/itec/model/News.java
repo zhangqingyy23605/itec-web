@@ -28,6 +28,7 @@ public class News {
     @Column(columnDefinition = "MEDIUMTEXT")
     private String content;
 
+//    @Column(name = "editor_id")
     private String editor;
 
 //    private int numberOfVisit;

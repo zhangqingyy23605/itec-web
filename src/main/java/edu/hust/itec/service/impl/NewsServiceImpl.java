@@ -39,13 +39,14 @@ public class NewsServiceImpl implements NewsService {
 
     //Category
     private Map<String, NewsCategory> categoryMap = new HashMap<>();
-
+    private List<NewsCategory> categoryList = new ArrayList<>();
     public void initCategoryMap(String columnName) {
         NewsCategory rootNewsCategory = newsDAO.getCategoryByName(columnName);
         if (rootNewsCategory == null) {
             System.out.println("数据库中不存在\"" + columnName + "\"栏目的分类信息！");
         } else {
             extractLeavesToCategoryMap(rootNewsCategory, this.categoryMap);
+            extractLeavesToCategoryList(this.categoryMap, this.categoryList);
             System.out.println("\"" + columnName + "\"分类初始化完成");
         }
     }
@@ -53,7 +54,6 @@ public class NewsServiceImpl implements NewsService {
         Queue<NewsCategory> queue = new LinkedList<>();
         queue.add(rootCategory);
         NewsCategory currentCategory;
-
         while (!queue.isEmpty()) {
             currentCategory = queue.remove();
             categoryMap.put(currentCategory.getName(), currentCategory);
@@ -76,6 +76,17 @@ public class NewsServiceImpl implements NewsService {
                 }
             }
         }
+    }
+    private void extractLeavesToCategoryList(Map<String, NewsCategory> categoryMap, List<NewsCategory> categoryList) {
+        for (NewsCategory newsCategory: this.categoryMap.values()) {
+            if (newsCategory.getChildren().isEmpty()) {
+                this.categoryList.add(newsCategory);
+            }
+        }
+    }
+
+    public List<NewsCategory> getCategoryList() {
+        return this.categoryList;
     }
 
     //getter and setter

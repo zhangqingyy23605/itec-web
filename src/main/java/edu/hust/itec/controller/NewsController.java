@@ -77,10 +77,8 @@ public class NewsController {
 
     @RequestMapping("/add")
     public String addItemView(ModelMap model) {
-//        if (categoryList == null) {
-//            categoryList = newsService.getCategoryByName();
-//        }
-//        model.put("categoryList", categoryList);
+        model.addAttribute("categoryList", newsService.getCategoryList());
+        model.addAttribute("news", new News());
         return "news/item_input";
     }
 
