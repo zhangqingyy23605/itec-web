@@ -14,6 +14,7 @@ public interface NewsService {
     News getItemById(int id);
     void addItem(News news);
     void deleteItemById(int id);
+    void updateItem(News news);
 
     //Category
     void initCategoryMap(String columnName);

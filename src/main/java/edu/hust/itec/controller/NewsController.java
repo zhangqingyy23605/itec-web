@@ -107,17 +107,15 @@ public class NewsController {
     }
 
     @ModelAttribute//这里的RequestParam包含POST报文中的Param
-    public void getNews(@RequestParam(value = "newsId", required = false) Integer newsId, ModelMap model) {
+    public void getNews(@RequestParam(value = "id", required = false) Integer newsId, ModelMap model) {
         if(newsId != null) {
             //是修改操作
             model.addAttribute("news", this.newsService.getItemById(newsId));
         }
     }
-    @RequestMapping(value = "/{newsId}", method = RequestMethod.PUT)
-    public String editItem(@PathVariable Integer newsId, News news) {
-        news.setId(newsId);
-        //newsService.updateItem(news);
-        System.out.println(news);
+    @RequestMapping(method = RequestMethod.PUT)
+    public String editItem(News news) {
+        newsService.updateItem(news);
         return "redirect:/news/" + news.getId();
     }
 }

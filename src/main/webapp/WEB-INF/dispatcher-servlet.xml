@@ -12,12 +12,17 @@
        http://www.springframework.org/schema/context/spring-context-3.0.xsd
        ">
 
+    <!-- 加载默认的HanderlerMapping等-->
     <mvc:annotation-driven/>
+    <!-- 搜索Controller Bean-->
     <context:component-scan base-package="edu.hust.itec.controller"/>
+
+    <!-- 静态资源映射-->
     <mvc:resources mapping="/frontend/**" location="/frontend/" />
     <mvc:resources mapping="/image/**" location="/image/" />
     <mvc:resources mapping="/upfiles/**" location="/upfiles/" />
-    <!--<mvc:default-servlet-handler/>-->
+
+    <!-- 指定试图解析器参数-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/view/"/>
         <property name="suffix" value=".jsp"/>

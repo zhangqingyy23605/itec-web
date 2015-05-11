@@ -13,6 +13,7 @@ public interface NewsDAO {
     News getItemById(int id);
     void addItem(News news);
     void deleteItemById(int id);
+    void updateItem(News news);
 
     //category
     NewsCategory getCategoryByName(String categoryName);

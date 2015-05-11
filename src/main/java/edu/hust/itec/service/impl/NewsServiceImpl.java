@@ -43,6 +43,9 @@ public class NewsServiceImpl implements NewsService {
     public void deleteItemById(int id) {
         newsDAO.deleteItemById(id);
     }
+    public void updateItem(News news) {
+        newsDAO.updateItem(news);
+    }
 
     //Category
     private Map<String, NewsCategory> categoryMap = new HashMap<>();

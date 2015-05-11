@@ -42,13 +42,18 @@ public class NewsDAOImpl implements NewsDAO {
     }
     public void addItem(News news) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.persist(news);
+        session.save(news);
     }
     public void deleteItemById(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Query query = session.createQuery("delete News n where n.id = :id");
         query.setInteger("id", id);
         query.executeUpdate();
+    }
+    public void updateItem(News news) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.update(news);
+        System.out.println(news);
     }
 
     //category
