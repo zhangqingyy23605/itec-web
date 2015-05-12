@@ -19,11 +19,17 @@
     padding: 10px 0;
 }
 .news_info {
-    color: #999999;
+    color: #999;
     text-align: center;
     padding: 3px 0;
 }
 .news_content {
     margin: 20px 0px;
     line-height: 200%;
+}
+.edit {
+    cursor: hand;
+}
+.delete {
+    cursor: hand;
 }

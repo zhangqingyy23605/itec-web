@@ -1,8 +1,11 @@
 package edu.hust.itec.model;
 
-import javax.persistence.*;
-import java.util.Date;
 
+import org.hibernate.validator.constraints.*;
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+import java.util.*;
 
 @Entity
 @Table(indexes = {
@@ -19,6 +22,7 @@ public class News {
     @JoinColumn(name = "category_id", nullable = false)
     private NewsCategory category;
 
+    @NotBlank
     private String heading;
 
     @Column(columnDefinition = "DEFAULT CURRENT_TIMESTAMP")
@@ -26,9 +30,11 @@ public class News {
     private Date addDate;
 
     @Column(columnDefinition = "MEDIUMTEXT")
+    @NotBlank
     private String content;
 
 //    @Column(name = "editor_id")
+    @NotBlank
     private String editor;
 
 //    private int numberOfVisit;

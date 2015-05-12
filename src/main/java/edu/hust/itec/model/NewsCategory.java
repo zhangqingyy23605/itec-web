@@ -2,7 +2,8 @@ package edu.hust.itec.model;
 
 import java.util.*;
 import javax.persistence.*;
-import java.util.ArrayList;
+import javax.validation.constraints.*;
+import org.hibernate.validator.constraints.*;
 
 @Entity
 //@Table(indexes = {
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class NewsCategory {
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @Column(unique = true)
     private String name;//热点新闻：生动态、学术交流、项目进展；通知公告：招生公告、招聘通知；
@@ -29,13 +30,14 @@ public class NewsCategory {
     @Transient
     private List<Integer> leavesId = new ArrayList<>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }

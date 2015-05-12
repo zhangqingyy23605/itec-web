@@ -1,0 +1,21 @@
+<!--需要在前面引入过jQuery-->
+<script type="text/javascript">
+    $(function(){
+        $(".delete").click(function() {
+            var href = $(this).attr("href");
+            $("#delete_form").attr("action", href).submit();
+            return false;
+        })
+        $(".edit").click(function() {
+            var href = $(this).attr("href");
+            window.location.href = href;
+            return false;
+        })
+
+
+
+    })
+</script>
+<form id="delete_form" method="post">
+    <input type="hidden" name="_method" value="delete"/>
+</form>

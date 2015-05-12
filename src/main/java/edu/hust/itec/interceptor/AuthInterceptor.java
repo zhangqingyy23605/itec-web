@@ -16,19 +16,27 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
 
-        // set few parameters to handle ajax request from different host
-        response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-        response.addHeader("Access-Control-Max-Age", "1000");
-        response.addHeader("Access-Control-Allow-Headers", "Content-Type");
-        response.addHeader("Cache-Control", "private");
 
-        String reqUri = request.getRequestURI();
-        String serviceName = reqUri.substring(reqUri.lastIndexOf("/") + 1,
-                reqUri.length());
-        if (serviceName.equals("SOMETHING")) {
-
+        if (request.getMethod().equalsIgnoreCase("POST")) {
+            // Not a POST/GET - send error and return false
+            System.out.println("AuthInterceptor.preHandle");
+//            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Unauthorized Request");
+//            return false;
         }
+
+        // set few parameters to handle ajax request from different host
+//        response.addHeader("Access-Control-Allow-Origin", "*");
+//        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+//        response.addHeader("Access-Control-Max-Age", "1000");
+//        response.addHeader("Access-Control-Allow-Headers", "Content-Type");
+//        response.addHeader("Cache-Control", "private");
+//
+//        String reqUri = request.getRequestURI();
+//        String serviceName = reqUri.substring(reqUri.lastIndexOf("/") + 1,
+//                reqUri.length());
+//        if (serviceName.equals("SOMETHING")) {
+//
+//        }
         return true;
     }
 

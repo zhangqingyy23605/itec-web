@@ -12,9 +12,15 @@ public class Page {
 
     private int numberOfRecords;
     private int numberOfPages;// TODO 如果有20页，下面页码导航会过于长
-    private int firstResult;
+    private int firstResult;//offset
 
-    public void autoSetPageNumberAndFirstResult() {
+    public void setNumberOfRecordsThenAutoSetOthers(int numberOfRecords) {
+        this.numberOfRecords = numberOfRecords;
+
+        //set the number of page automatically
+        this.numberOfPages = (int)Math.ceil(this.numberOfRecords / (double)this.pageSize);
+
+        //set the page number automatically
         if (this.pageAction != null) {
             switch (this.pageAction) {
                 case "first":
@@ -24,25 +30,31 @@ public class Page {
                     this.pageNumber = this.numberOfPages;
                     break;
                 case "previous":
-                    if (this.pageNumber > 1) {
-                        this.pageNumber--;
-                    }
+                    this.pageNumber--;
                     break;
                 case "next":
-                    if (this.pageNumber < this.numberOfPages) {
-                        this.pageNumber++;
-                    }
+                    this.pageNumber++;
                     break;
-            }
+                default:
+                    try {
+                        this.pageNumber = Integer.parseInt(this.pageAction);
+                    } catch(NumberFormatException e) {}
+                }
             this.pageAction = null;
         }
+        if(this.pageNumber > this.numberOfPages) {
+            this.pageNumber = this.numberOfPages;
+        }
+        if(this.pageNumber < 1) {
+            this.pageNumber = 1;
+        }
+
+        //set the first result automatically
         this.firstResult = (this.pageNumber - 1) * this.pageSize;
     }
 
-    public void setNumberOfRecordsAndPages(int numberOfRecords) {
-        this.numberOfRecords = numberOfRecords;
-        this.numberOfPages = (int)Math.ceil(this.numberOfRecords / (double)this.pageSize);
-        this.autoSetPageNumberAndFirstResult();
+    public void setPageAction(String pageAction) {
+        this.pageAction = pageAction;
     }
 
     public int getNumberOfRecords() {
@@ -87,9 +99,5 @@ public class Page {
 
     public void setColumnName(String columnName) {
         this.columnName = columnName;
-    }
-
-    public void setPageAction(String pageAction) {
-        this.pageAction = pageAction;
     }
 }

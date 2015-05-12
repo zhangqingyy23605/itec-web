@@ -25,7 +25,7 @@ public class NewsServiceImpl implements NewsService {
         }
         List<Integer> categoryIds = newsCategory.getLeavesId();
         int numberOfRecords = newsDAO.getNumberOfItems(categoryIds);
-        page.setNumberOfRecordsAndPages(numberOfRecords);
+        page.setNumberOfRecordsThenAutoSetOthers(numberOfRecords);
         //需要先知道有多少页后，才能知道当前访问的页码是否有问题，并且从数据库第几条开始查询
         int firstResult = page.getFirstResult();
         int pageSize = page.getPageSize();

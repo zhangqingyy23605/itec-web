@@ -6,20 +6,9 @@
     <%@ include file="/WEB-INF/view/common/head_tag_part.html" %>
     <link href="/frontend/css/list.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body>s
 <%@ include file="/WEB-INF/view/common/header_part.jsp" %>
-<script type="text/javascript">
-    $(function(){
-        $(".delete").click(function() {
-            var href = $(this).attr("href");
-            $("form").attr("action", href).submit();
-            return false;
-        })
-    })
-</script>
-<form method="post">
-    <input type="hidden" name="_method" value="delete"/>
-</form>
+<%@ include file="/WEB-INF/view/common/delete_form.html" %>
 <div id="left">
     <div class="frame">
         <div class="frame_head">
@@ -83,7 +72,7 @@
         <div id="pagination">
             共${page.numberOfRecords}条
             第${page.pageNumber}/${page.numberOfPages}页
-            <span class="pagination_item"><a href="/news/add">新增</a></span>
+            <span class="pagination_item"><a href="/news/add">添加</a></span>
             <span class="pagination_item"><a href="/news?pageAction=first">首页</a></span>
             <span class="pagination_item"><a href="/news?pageAction=previous">上一页</a></span>
             <c:forEach begin="1" end="${page.numberOfPages}" var="index">
@@ -95,7 +84,7 @@
                     <span class="pagination_item">
                 </c:otherwise>
                 </c:choose>
-                        <a href="/news?pageNumber=${index}">${index}</a>
+                        <a href="/news?pageAction=${index}">${index}</a>
                     </span>
             </c:forEach>
             <span class="pagination_item"><a href="/news?pageAction=next">下一页</a></span>

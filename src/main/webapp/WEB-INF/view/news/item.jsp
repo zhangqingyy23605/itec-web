@@ -4,10 +4,12 @@
 <html>
 <head>
     <%@ include file="/WEB-INF/view/common/head_tag_part.html" %>
+
     <link href="/frontend/css/item.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <%@ include file="/WEB-INF/view/common/header_part.jsp" %>
+<%@ include file="/WEB-INF/view/common/delete_form.html" %>
 <div class="frame">
     <div class="frame_head">
         <span class="frame_name">新闻内容</span>
@@ -25,7 +27,11 @@
                 ${news.heading}
         </div>
         <div class="news_info">
-            日期：<fmt:formatDate value="${news.addDate}" pattern="yyyy-M-d"/>&nbsp作者：${news.editor}
+            <span>日期：<fmt:formatDate value="${news.addDate}" pattern="yyyy-M-d"/>&nbsp;</span>
+            <span>作者：${news.editor}&nbsp;</span>
+            <span>操作：</span>
+            <span href="/news/${news.id}/edit" class="edit">[编辑]</span>
+            <span href="/news/${news.id}" class="delete">[删除]</span>
         </div>
         <div class="news_content">
             <c:out value="${news.content}" escapeXml="false"/>

@@ -18,11 +18,18 @@
     </div>
     <div class="frame_body">
         <form:form action="/news" method="post" modelAttribute="news">
-            类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/><br/>
-            标题<form:input path="heading" /><br/>
-            内容<form:textarea path="content" rows="10" cols="30" ></form:textarea><br/>
+            类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/>
+            <br/>
+            标题<form:input path="heading" />
+            <form:errors path="heading"/>
+            <br/>
+            内容<form:textarea path="content" rows="10" cols="30" ></form:textarea>
+            <form:errors path="content"/>
+            <br/>
             <c:if test="${news.id == null}">
-                作者<form:input path="editor" value="${sessionScope.user.id}"/><br/>
+                作者<form:input path="editor" value="${sessionScope.user.id}"/>
+                <form:errors path="editor"/>
+                <br/>
             </c:if>
             <c:if test="${news.id != null}">
                 <form:hidden path="id"/>
@@ -30,6 +37,11 @@
             </c:if>
             <input type="submit" value="提交">
         </form:form>
+        <form action="/news/uploadfile" method="post" enctype="multipart/form-data">
+            文件<input type="file" name="file">
+            <input type="submit" value="上传"/>
+        </form>
+
     </div>
 </div>
 <%@ include file="/WEB-INF/view/common/footer_part.html" %>
