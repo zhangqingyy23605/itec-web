@@ -14,8 +14,11 @@
 
     <!-- 加载默认的HanderlerMapping等-->
     <mvc:annotation-driven/>
+
     <!-- 搜索Controller Bean-->
-    <context:component-scan base-package="edu.hust.itec.controller"/>
+    <context:component-scan base-package="edu.hust.itec" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
 
     <!-- 静态资源映射-->
     <mvc:resources mapping="/frontend/**" location="/frontend/" />
@@ -28,4 +31,17 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!--文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="5242880"/>
+    </bean>
+
+    <!--自定义拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/news"/>
+            <bean class="edu.hust.itec.interceptor.AuthInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
