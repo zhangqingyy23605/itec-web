@@ -53,7 +53,6 @@ public class NewsDAOImpl implements NewsDAO {
     public void updateItem(News news) {
         Session session = this.sessionFactory.getCurrentSession();
         session.update(news);
-        System.out.println(news);
     }
 
     //category

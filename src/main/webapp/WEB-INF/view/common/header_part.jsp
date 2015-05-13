@@ -3,8 +3,8 @@
 <!-- Add jQuery library -->
 <script type="text/javascript" src="/frontend/lib/jquery-1.10.1.min.js"></script>
 <!-- Add fancyBox -->
-<link rel="stylesheet" href="/frontend/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
-<script type="text/javascript" src="/frontend/fancybox/jquery.fancybox.pack.js"></script>
+<link rel="stylesheet" href="/frontend/lib/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="/frontend/lib/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $(".fancybox").fancybox();

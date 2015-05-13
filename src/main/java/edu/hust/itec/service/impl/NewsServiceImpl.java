@@ -20,7 +20,7 @@ public class NewsServiceImpl implements NewsService {
     public List<News> getList(Page page) {
         String categoryName = page.getCategoryName();
         NewsCategory newsCategory = categoryMap.get(categoryName);
-        if (newsCategory == null) {//如果参数错误，就用默认值
+        if (newsCategory == null) {//如果分类名称错误，就用默认值
             newsCategory = categoryMap.get(page.getColumnName());
         }
         List<Integer> categoryIds = newsCategory.getLeavesId();
@@ -49,19 +49,19 @@ public class NewsServiceImpl implements NewsService {
 
     //Category
     private Map<String, NewsCategory> categoryMap = new HashMap<>();
-    private List<NewsCategory> categoryList = new ArrayList<>();
+    private List<NewsCategory> categoryLeaves = new ArrayList<>();
     public void initCategoryMap(String columnName) {
         System.out.println("开始加载\"" + columnName + "\"分类信息");
         NewsCategory rootNewsCategory = newsDAO.getCategoryByName(columnName);
         if (rootNewsCategory == null) {
             System.out.println("数据库中不存在\"" + columnName + "\"的分类信息！");
         } else {
-            extractLeavesToCategoryMap(rootNewsCategory, this.categoryMap);
-            extractLeavesToCategoryList(this.categoryMap, this.categoryList);
+            generateCategoryMap(rootNewsCategory, this.categoryMap);
+            generateCategoryLeaves(this.categoryMap, this.categoryLeaves);
             System.out.println("成功加载\"" + columnName + "\"分类信息");
         }
     }
-    private void extractLeavesToCategoryMap(NewsCategory rootCategory, Map<String, NewsCategory> categoryMap) {
+    private void generateCategoryMap(NewsCategory rootCategory, Map<String, NewsCategory> categoryMap) {
         Queue<NewsCategory> queue = new LinkedList<>();
         queue.add(rootCategory);
         NewsCategory currentCategory;
@@ -88,16 +88,15 @@ public class NewsServiceImpl implements NewsService {
             }
         }
     }
-    private void extractLeavesToCategoryList(Map<String, NewsCategory> categoryMap, List<NewsCategory> categoryList) {
+    private void generateCategoryLeaves(Map<String, NewsCategory> categoryMap, List<NewsCategory> categoryList) {
         for (NewsCategory newsCategory: this.categoryMap.values()) {
             if (newsCategory.getChildren().isEmpty()) {
-                this.categoryList.add(newsCategory);
+                this.categoryLeaves.add(newsCategory);
             }
         }
     }
-
-    public List<NewsCategory> getCategoryList() {
-        return this.categoryList;
+    public List<NewsCategory> getCategoryLeaves() {
+        return this.categoryLeaves;
     }
 
     //getter and setter

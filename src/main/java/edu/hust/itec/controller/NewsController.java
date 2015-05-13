@@ -9,12 +9,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.*;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -30,9 +28,6 @@ public class NewsController {
     static final private int pageSize = 8;
     static final private String columnName = "新闻中心";
 
-    public NewsController() {
-        System.out.println("启动");
-    }
     @PostConstruct
     public void initCategoryMap() {
         newsService.initCategoryMap(this.columnName);
@@ -88,8 +83,8 @@ public class NewsController {
     //添加新闻
     @RequestMapping("/add")
     public String addItemView(ModelMap model) {
-        model.addAttribute("categoryList", newsService.getCategoryList());
-        model.addAttribute("news", new News());//TODO news editor 由改为 User类型的 editor_id
+        model.addAttribute("categoryList", newsService.getCategoryLeaves());
+        model.addAttribute("news", new News());//TODO news editor 由改为 User类型的 editor_id：做用户管理的时候改进
         return "news/input";
     }
     @RequestMapping(method = RequestMethod.POST)
@@ -98,8 +93,9 @@ public class NewsController {
 //            for(FieldError error: result.getFieldErrors()) {
 //                System.out.println(error.getField() + ": " + error.getDefaultMessage());
 //            }
-            model.addAttribute("categoryList", newsService.getCategoryList());
+            model.addAttribute("categoryList", newsService.getCategoryLeaves());
             return "news/input";
+            //TODO 错误回显不够优雅：先解决“编辑新闻”的回显问题，看需不需要改变回显机制。目前依赖于Spring的Form标签。
         } else {
             newsService.addItem(news);
             return "redirect:/news";
@@ -111,7 +107,7 @@ public class NewsController {
     public String editItemView(@PathVariable int newsId, ModelMap model) {
         //放入已有数据
         model.addAttribute("news", newsService.getItemById(newsId));
-        model.addAttribute("categoryList", newsService.getCategoryList());
+        model.addAttribute("categoryList", newsService.getCategoryLeaves());
         return "news/input";
     }
     @ModelAttribute//这里的RequestParam包含POST报文中的Param
@@ -123,21 +119,24 @@ public class NewsController {
     @RequestMapping(method = RequestMethod.PUT)
     public String editItem(@Valid News news, BindingResult result, ModelMap model) {
         if(result.getErrorCount() > 0) {
-            model.addAttribute("categoryList", newsService.getCategoryList());
+            model.addAttribute("categoryList", newsService.getCategoryLeaves());
 //            model.addAttribute("news", news);
             return "news/input";
         } else {
             newsService.updateItem(news);
             return "redirect:/news/" + news.getId();
+            //TODO 错误回显报错：
         }
     }
 
+    //练习用
     @RequestMapping("/uploadfile")
     public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        if(!file.isEmpty()) {
+        if(!file.isEmpty()) {//如果用户没有选择本地文件就点击上传，会检出isEmpty
             file.transferTo(new File("d:/" + file.getOriginalFilename()));
             System.out.println("文件已保存");
         }
         return "redirect:/news/add";
     }
+
 }

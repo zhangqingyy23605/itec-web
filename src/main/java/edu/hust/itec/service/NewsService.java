@@ -18,5 +18,5 @@ public interface NewsService {
 
     //Category
     void initCategoryMap(String columnName);
-    List<NewsCategory> getCategoryList();
+    List<NewsCategory> getCategoryLeaves();
 }

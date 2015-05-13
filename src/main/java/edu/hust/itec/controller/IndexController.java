@@ -40,4 +40,12 @@ public class IndexController {
         model.addAttribute("newsListRight", newsListRight);
         return "index";
     }
+
+    //产生异常
+    @RequestMapping("/error")
+    public String makeError() {
+//        throw new MyException();
+        int a = 1/0;
+        return "redirect:/news";
+    }
 }

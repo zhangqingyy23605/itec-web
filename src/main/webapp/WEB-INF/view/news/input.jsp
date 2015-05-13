@@ -9,6 +9,12 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/view/common/header_part.jsp" %>
+<script src="/frontend/lib/ckeditor/ckeditor.js"></script>
+<script type="application/javascript">
+    $(function(){
+        CKEDITOR.replace('ckeditor');
+    })
+</script>
 <div class="frame">
     <div class="frame_head">
         <span class="frame_name">
@@ -18,12 +24,10 @@
     </div>
     <div class="frame_body">
         <form:form action="/news" method="post" modelAttribute="news">
-            类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/>
-            <br/>
-            标题<form:input path="heading" />
-            <form:errors path="heading"/>
-            <br/>
-            内容<form:textarea path="content" rows="10" cols="30" ></form:textarea>
+            标题<form:input path="heading" />&nbsp;&nbsp;类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/>
+            <form:errors path="heading"/><br/>
+
+            <form:textarea path="content" rows="10" cols="30" id="ckeditor"></form:textarea>
             <form:errors path="content"/>
             <br/>
             <c:if test="${news.id == null}">
@@ -35,7 +39,7 @@
                 <form:hidden path="id"/>
                 <input type="hidden" name="_method" value="put"/>
             </c:if>
-            <input type="submit" value="提交">
+            <input type="submit" value="<c:if test="${news.id == null}">添加</c:if><c:if test="${news.id != null}">修改</c:if>">
         </form:form>
         <form action="/news/uploadfile" method="post" enctype="multipart/form-data">
             文件<input type="file" name="file">

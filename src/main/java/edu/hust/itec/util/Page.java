@@ -11,7 +11,7 @@ public class Page {
     private String pageAction;
 
     private int numberOfRecords;
-    private int numberOfPages;// TODO 如果有20页，下面页码导航会过于长
+    private int numberOfPages;// TODO 如果有20页，下面页码导航会过于长：所有工作完成后用jQuery改进
     private int firstResult;//offset
 
     public void setNumberOfRecordsThenAutoSetOthers(int numberOfRecords) {

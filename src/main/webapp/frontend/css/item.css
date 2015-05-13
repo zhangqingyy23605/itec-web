@@ -6,6 +6,9 @@
 #right_header img{
     width: 100%;
 }
+.frame_head {
+    background: url(/image/right_header.png);
+}
 .frame_body {
     padding: 0px 20px;
     font-size: 14px;
@@ -15,10 +18,10 @@
     font-size: 22px;
     font-weight: bold;
     text-align: center;
-    border-bottom: 1px solid #E2E2E2;
     padding: 10px 0;
 }
 .news_info {
+    border-top: 1px solid #E2E2E2;
     color: #999;
     text-align: center;
     padding: 3px 0;
