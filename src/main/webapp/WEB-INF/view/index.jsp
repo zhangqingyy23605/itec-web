@@ -52,8 +52,8 @@
             <table>
                 <tr>
                     <td valign="middle">
-                        <link href="/frontend/fadefocus/fadefocus.css" rel="stylesheet" type="text/css" />
-                        <script type="text/javascript" src="/frontend/fadefocus/fadefocus.js"></script>
+                        <link href="/frontend/lib/fadefocus/fadefocus.css" rel="stylesheet" type="text/css" />
+                        <script type="text/javascript" src="/frontend/lib/fadefocus/fadefocus.js"></script>
                         <div id="fade_focus">
                             <div class="load">
                                 <img src="/image/loading.gif" width="100" height="100" />

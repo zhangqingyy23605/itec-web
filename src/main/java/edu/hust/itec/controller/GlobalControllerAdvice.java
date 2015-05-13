@@ -11,12 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class GlobalControllerAdvice {
 
     //处理全局异常
-    @ExceptionHandler({Exception.class})
-    public ModelAndView handleGlobalException(Exception ex) {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("/common/error");
-        mav.addObject("exception", ex);
-        return mav;
-    }
+//    @ExceptionHandler({Exception.class})
+//    public ModelAndView handleGlobalException(Exception ex) {
+//        ModelAndView mav = new ModelAndView();
+//        mav.setViewName("/common/error");
+//        mav.addObject("exception", ex);
+//        return mav;
+//    }
 
 }

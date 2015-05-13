@@ -6,7 +6,7 @@
     <%@ include file="/WEB-INF/view/common/head_tag_part.html" %>
     <link href="/frontend/css/list.css" rel="stylesheet" type="text/css" />
 </head>
-<body>s
+<body>
 <%@ include file="/WEB-INF/view/common/header_part.jsp" %>
 <%@ include file="/WEB-INF/view/common/delete_form.html" %>
 <div id="left">

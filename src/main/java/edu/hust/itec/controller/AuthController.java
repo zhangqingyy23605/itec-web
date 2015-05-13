@@ -21,35 +21,59 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/auth")
-@SessionAttributes("user")
+//@SessionAttributes({"user", "referer"})
 public class AuthController {
 //    @Autowired
 //    private AuthService AuthService;
 
     @RequestMapping
-    public String auth(ModelMap model, HttpServletRequest request, HttpSession session, SessionStatus status) {
-        User user =  (User)session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setUsername("root");
-            model.addAttribute("user", user);
-        } else {
-            status.setComplete();
-        }
+    public String authRoute(HttpServletRequest request, HttpSession session) {
+        //save referer
         String referer = request.getHeader("Referer");
-        return "redirect:"+ referer;
+        if(referer != null) {
+            session.setAttribute("refererAuth", referer);
+        }
+        //route according state
+        User user = (User) session.getAttribute("auth");
+        if (user == null) {
+            return "redirect:/auth/login";//进入登陆界面
+        } else {
+            return "redirect:/auth/logout";//进入管理界面
+        }
     }
 
-//    @RequestMapping("/signin")
-//    public String signin(@ModelAttribute User user) {
-//        System.out.println("登陆");
-//        return "redirect:/";
-//    }
-//
-//    @RequestMapping("/signout")
-//    public String signout(@ModelAttribute User user) {
-//        System.out.println("登陆");
-//        return "redirect:/";
-//    }
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginView() {
+        return "auth/login";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(HttpSession session) {
+        User user = new User();
+        user.setUsername("root");
+        session.setAttribute("auth", user);
+
+        String referer = (String)session.getAttribute("refererAuth");
+        session.removeAttribute("refererAuth");
+        if(referer != null) {
+            return "redirect:" + referer;
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("auth");
+
+        String referer = (String)session.getAttribute("refererAuth");
+        session.removeAttribute("refererAuth");
+        if(referer != null) {
+            return "redirect:" + referer;
+        } else {
+            return "redirect:/";
+        }
+
+    }
 
 }
