@@ -3,56 +3,19 @@ package edu.hust.itec.dao.impl;
 import edu.hust.itec.dao.NewsDAO;
 import edu.hust.itec.model.News;
 import edu.hust.itec.model.NewsCategory;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.springframework.stereotype.Repository;
-import javax.annotation.Resource;
-import java.util.*;
+
+import java.util.Collection;
 
 @Repository("newsDAO")
-public class NewsDAOImpl implements NewsDAO {
-    @Resource
-    private SessionFactory sessionFactory;
-
+public class NewsDAOImpl extends AbstractDAOImpl<News, Integer> implements NewsDAO {
     //list
-    @SuppressWarnings("unchecked")
-    public List<News> getList(List<Integer> categoryIds, int firstResult, int pageSize) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Query query = session.createQuery(
-                "select new News(news.heading, news.addDate, news.id) from News news " +
-                        "where news.category.id in :categoryIds order by news.addDate desc");
-        query.setParameterList("categoryIds", categoryIds);
-        query.setFirstResult(firstResult);
-        query.setMaxResults(pageSize);
-        return (List<News>)query.list();
-    }
-
-    public int getNumberOfItems(List<Integer> categoryIds) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select count(*) from News news where news.category.id in :categoryIds");
-        query.setParameterList("categoryIds", categoryIds);
-        return ((Long)query.uniqueResult()).intValue();
-    }
-
-    //item
-    public News getItemById(int id) {
-        Session session = this.sessionFactory.getCurrentSession();
-        return (News)session.get(News.class, id);
-    }
-    public void addItem(News news) {
-        Session session = this.sessionFactory.getCurrentSession();
-        session.save(news);
-    }
-    public void deleteItemById(int id) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Query query = session.createQuery("delete News n where n.id = :id");
-        query.setInteger("id", id);
-        query.executeUpdate();
-    }
-    public void updateItem(News news) {
-        Session session = this.sessionFactory.getCurrentSession();
-        session.update(news);
+    //@SuppressWarnings("unchecked")
+    public Collection<News> getByCategory(Collection<Integer> categoryIds, int firstResult, int pageSize) {
+        return super.getByCategory(categoryIds, firstResult, pageSize,
+                "new News(t.id, t.heading, t.addDate)",
+                "order by t.addDate desc");
     }
 
     //category

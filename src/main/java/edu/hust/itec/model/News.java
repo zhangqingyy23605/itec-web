@@ -42,7 +42,7 @@ public class News {
     public News() {
     }
 
-    public News(String heading, Date addDate, int id) {
+    public News(int id, String heading, Date addDate) {
         this.id = id;
         this.heading = heading;
         this.addDate = addDate;

@@ -1,5 +1,4 @@
 package edu.hust.itec.service.impl;
-
 import edu.hust.itec.dao.NewsDAO;
 import edu.hust.itec.model.News;
 import edu.hust.itec.model.NewsCategory;
@@ -16,50 +15,55 @@ public class NewsServiceImpl implements NewsService {
     @Resource
     private NewsDAO newsDAO;
 
+    //item
+    public boolean saveOrUpdate(News news) {
+        //news.setModifiedTime(new Date());
+        return newsDAO.saveOrUpdate(news);
+    }
+    public boolean deleteById(Integer id) {
+        return newsDAO.deleteById(id);
+    }
+    public News getById(Integer id) {
+        //newsDAO.addVisitTimeById(id);
+        return newsDAO.getById(id);
+    }
+
     //list
-    public List<News> getList(Page page) {
+    public Collection<News> getList(Page page) {
         String categoryName = page.getCategoryName();
         NewsCategory newsCategory = categoryMap.get(categoryName);
         if (newsCategory == null) {//如果分类名称错误，就用默认值
             newsCategory = categoryMap.get(page.getColumnName());
         }
         List<Integer> categoryIds = newsCategory.getLeavesId();
-        int numberOfRecords = newsDAO.getNumberOfItems(categoryIds);
+        int numberOfRecords = newsDAO.getTotalNumberByCategory(categoryIds);
         page.setNumberOfRecordsThenAutoSetOthers(numberOfRecords);
         //需要先知道有多少页后，才能知道当前访问的页码是否有问题，并且从数据库第几条开始查询
         int firstResult = page.getFirstResult();
         int pageSize = page.getPageSize();
-        return newsDAO.getList(categoryIds, firstResult, pageSize);
-    }
-
-    //item
-    public News getItemById(int id) {
-        //newsDAO.addVisitTimeById(id);
-        return newsDAO.getItemById(id);
-    }
-    public void addItem(News news) {
-        newsDAO.addItem(news);
-    }
-    public void deleteItemById(int id) {
-        newsDAO.deleteItemById(id);
-    }
-    public void updateItem(News news) {
-        newsDAO.updateItem(news);
+        return newsDAO.getByCategory(categoryIds, firstResult, pageSize);
     }
 
     //Category
-    private Map<String, NewsCategory> categoryMap = new HashMap<>();
-    private List<NewsCategory> categoryLeaves = new ArrayList<>();
+    private Map<String, NewsCategory> categoryMap;
+    private List<NewsCategory> categoryLeaves;
+
     public void initCategoryMap(String columnName) {
+        Map<String, NewsCategory> categoryMap = new HashMap<>();
+        List<NewsCategory> categoryLeaves = new ArrayList<>();
+
         System.out.println("开始加载\"" + columnName + "\"分类信息");
         NewsCategory rootNewsCategory = newsDAO.getCategoryByName(columnName);
         if (rootNewsCategory == null) {
             System.out.println("数据库中不存在\"" + columnName + "\"的分类信息！");
         } else {
-            generateCategoryMap(rootNewsCategory, this.categoryMap);
-            generateCategoryLeaves(this.categoryMap, this.categoryLeaves);
+            generateCategoryMap(rootNewsCategory, categoryMap);
+            extractCategoryLeaves(categoryMap, categoryLeaves);
             System.out.println("成功加载\"" + columnName + "\"分类信息");
         }
+
+        this.categoryMap = categoryMap;
+        this.categoryLeaves = categoryLeaves;
     }
     private void generateCategoryMap(NewsCategory rootCategory, Map<String, NewsCategory> categoryMap) {
         Queue<NewsCategory> queue = new LinkedList<>();
@@ -88,10 +92,10 @@ public class NewsServiceImpl implements NewsService {
             }
         }
     }
-    private void generateCategoryLeaves(Map<String, NewsCategory> categoryMap, List<NewsCategory> categoryList) {
-        for (NewsCategory newsCategory: this.categoryMap.values()) {
+    private void extractCategoryLeaves(Map<String, NewsCategory> categoryMap, List<NewsCategory> categoryLeaves) {
+        for (NewsCategory newsCategory: categoryMap.values()) {
             if (newsCategory.getChildren().isEmpty()) {
-                this.categoryLeaves.add(newsCategory);
+                categoryLeaves.add(newsCategory);
             }
         }
     }

@@ -119,7 +119,7 @@ html .fc,
 	border: 1px solid #ddd;
 	}
 	
-.fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
+.fc-state-highlight { /* <td> today cell */ /* TODO: insert .fc-today to <th> */
 	background: #fcf8e3;
 	}
 	

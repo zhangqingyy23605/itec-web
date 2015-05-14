@@ -12,7 +12,7 @@
 }
 
 
-/* add a scroll bar to stop page from jerking around */
+/* insert a scroll bar to stop page from jerking around */
 .modal-open.page-overflow .page-container,
 .modal-open.page-overflow .page-container .navbar-fixed-top,
 .modal-open.page-overflow .page-container .navbar-fixed-bottom,

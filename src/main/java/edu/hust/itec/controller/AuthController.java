@@ -2,6 +2,7 @@ package edu.hust.itec.controller;
 
 import edu.hust.itec.model.News;
 import edu.hust.itec.model.User;
+import edu.hust.itec.service.AuthService;
 import edu.hust.itec.service.NewsService;
 import edu.hust.itec.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import java.util.List;
 //@SessionAttributes({"user", "referer"})
 public class AuthController {
 //    @Autowired
-//    private AuthService AuthService;
+    private AuthService authService;
 
     @RequestMapping
     public String authRoute(HttpServletRequest request, HttpSession session) {
@@ -74,6 +75,24 @@ public class AuthController {
             return "redirect:/";
         }
 
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String register(User user, HttpSession session) {
+
+
+//        authService.save(user);
+
+        user.setUsername("root");
+        session.setAttribute("auth", user);
+
+        String referer = (String)session.getAttribute("refererAuth");
+        session.removeAttribute("refererAuth");
+        if(referer != null) {
+            return "redirect:" + referer;
+        } else {
+            return "redirect:/";
+        }
     }
 
 }

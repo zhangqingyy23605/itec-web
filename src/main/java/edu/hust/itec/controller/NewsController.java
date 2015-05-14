@@ -49,7 +49,7 @@ public class NewsController {
     //新闻列表
     @RequestMapping
     public String getList(@ModelAttribute Page page, ModelMap model) {
-            List<News> newsList = this.newsService.getList(page);
+            Collection<News> newsList = this.newsService.getList(page);
             model.addAttribute("newsList", newsList);
             return "/news/list";
     }
@@ -68,7 +68,7 @@ public class NewsController {
     //新闻正文
     @RequestMapping(value = "/{newsId}", method = RequestMethod.GET)
     public String getItem(@PathVariable int newsId, ModelMap model) {
-        News news = this.newsService.getItemById(newsId);
+        News news = this.newsService.getById(newsId);
         model.addAttribute("news", news);
         return "/news/item";
     }
@@ -76,7 +76,7 @@ public class NewsController {
     //删除新闻
     @RequestMapping(value = "/{newsId}", method = RequestMethod.DELETE)
     public String deleteItem(@PathVariable int newsId) {
-        this.newsService.deleteItemById(newsId);
+        this.newsService.deleteById(newsId);
         return "redirect:/news";
     }
 
@@ -97,7 +97,7 @@ public class NewsController {
             return "news/input";
             //TODO 错误回显不够优雅：先解决“编辑新闻”的回显问题，看需不需要改变回显机制。目前依赖于Spring的Form标签。
         } else {
-            newsService.addItem(news);
+            newsService.saveOrUpdate(news);
             return "redirect:/news";
         }
     }
@@ -106,14 +106,14 @@ public class NewsController {
     @RequestMapping(value = "/{newsId}/edit", method = RequestMethod.GET)
     public String editItemView(@PathVariable int newsId, ModelMap model) {
         //放入已有数据
-        model.addAttribute("news", newsService.getItemById(newsId));
+        model.addAttribute("news", newsService.getById(newsId));
         model.addAttribute("categoryList", newsService.getCategoryLeaves());
         return "news/input";
     }
     @ModelAttribute//这里的RequestParam包含POST报文中的Param
     public void getNews(@RequestParam(value = "id", required = false) Integer newsId, ModelMap model) {
         if(newsId != null) {//有id是修改操作
-            model.addAttribute("news", this.newsService.getItemById(newsId));
+            model.addAttribute("news", this.newsService.getById(newsId));
         }
     }
     @RequestMapping(method = RequestMethod.PUT)
@@ -123,7 +123,7 @@ public class NewsController {
 //            model.addAttribute("news", news);
             return "news/input";
         } else {
-            newsService.updateItem(news);
+            newsService.saveOrUpdate(news);
             return "redirect:/news/" + news.getId();
             //TODO 错误回显报错：
         }
