@@ -6,7 +6,7 @@ package edu.hust.itec.util;
 public class Page {
     private int pageSize = 10;
     private int pageNumber = 1;
-    private String rootCategoryName;
+    private String url;
     private String categoryName;
     private String pageAction;
 
@@ -93,11 +93,11 @@ public class Page {
         return firstResult;
     }
 
-    public String getRootCategoryName() {
-        return rootCategoryName;
+    public String getUrl() {
+        return url;
     }
 
-    public void setRootCategoryName(String rootCategoryName) {
-        this.rootCategoryName = rootCategoryName;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

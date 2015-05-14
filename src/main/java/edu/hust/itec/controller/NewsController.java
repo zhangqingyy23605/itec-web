@@ -10,7 +10,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.*;
 import javax.validation.Valid;
@@ -29,6 +28,7 @@ public class NewsController {
 
     static final private int pageSize = 8;
     static final private String rootCategoryName = "新闻中心";
+    static final private String url = "/news";
 
     @PostConstruct
     public void initCategoryTree() {
@@ -38,10 +38,10 @@ public class NewsController {
     @ModelAttribute
     public Page preparePage(HttpSession session) {
         Page page = (Page) session.getAttribute("page");
-        if (page == null || page.getRootCategoryName() != rootCategoryName) {
+        if (page == null || page.getUrl() != this.url) {
             page = new Page();
             page.setPageSize(this.pageSize);
-            page.setRootCategoryName(this.rootCategoryName);
+            page.setUrl(this.url);
             page.setCategoryName(this.rootCategoryName);
             session.setAttribute("page", page);
         }

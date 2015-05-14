@@ -9,24 +9,7 @@
 <body>
 <%@ include file="/WEB-INF/view/common/header_part.jsp" %>
 <%@ include file="/WEB-INF/view/common/delete_form.html" %>
-<div id="left">
-    <div class="frame">
-        <div class="frame_head">
-            <span class="frame_name"><a href="/news?categoryName=新闻中心">新闻中心</a></span>
-        </div>
-        <div class="frame_body bullet_left">
-            <ul>
-                <li><a href="/news?categoryName=热点新闻">热点新闻</a></li>
-                <li><a href="/news?categoryName=师生动态">&nbsp;&nbsp;师生动态</a></li>
-                <li><a href="/news?categoryName=学术交流">&nbsp;&nbsp;学术交流</a></li>
-                <li><a href="/news?categoryName=项目进展">&nbsp;&nbsp;项目进展</a></li>
-                <li><a href="/news?categoryName=通知公告">通知公告</a></li>
-                <li><a href="/news?categoryName=招生通知">&nbsp;&nbsp;招生通知</a></li>
-                <li><a href="/news?categoryName=招聘公告">&nbsp;&nbsp;招聘公告</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+<%@ include file="/WEB-INF/view/common/category_part.jsp" %>
 <div id="right">
     <div id="right_header">
         <img src="/image/column_news.png">
