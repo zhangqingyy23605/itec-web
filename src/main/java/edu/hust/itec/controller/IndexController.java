@@ -31,12 +31,12 @@ public class IndexController {
         Page page = new Page();
         page.setCategoryName("通知公告");
         page.setPageSize(10);
-        Collection<News> newsListLeft = newsService.getList(page);
+        Collection<News> newsListLeft = newsService.getByCategory(page);
         model.addAttribute("newsListLeft", newsListLeft);
 
         page.setCategoryName("热点新闻");
         page.setPageSize(6);
-        Collection<News> newsListRight = newsService.getList(page);
+        Collection<News> newsListRight = newsService.getByCategory(page);
         model.addAttribute("newsListRight", newsListRight);
         return "index";
     }

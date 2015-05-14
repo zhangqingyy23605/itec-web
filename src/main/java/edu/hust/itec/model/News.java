@@ -3,14 +3,12 @@ package edu.hust.itec.model;
 
 import org.hibernate.validator.constraints.*;
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 import java.util.*;
 
 @Entity
 @Table(indexes = {
-        @Index(columnList = "addDate"),
-        @Index(columnList = "category_id")
+        @Index(columnList = "createTime"),
+        @Index(columnList = "categoryId")
 })
 public class News {
     @Id
@@ -19,15 +17,15 @@ public class News {
 
 //    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    private NewsCategory category;
+    @JoinColumn(name = "categoryId", nullable = false)
+    private Category category;
 
     @NotBlank
     private String heading;
 
     @Column(columnDefinition = "DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date addDate;
+    private Date createTime;
 
     @Column(columnDefinition = "MEDIUMTEXT")
     @NotBlank
@@ -42,10 +40,10 @@ public class News {
     public News() {
     }
 
-    public News(int id, String heading, Date addDate) {
+    public News(int id, String heading, Date createTime) {
         this.id = id;
         this.heading = heading;
-        this.addDate = addDate;
+        this.createTime = createTime;
     }
 
     public Integer getId() {
@@ -56,11 +54,11 @@ public class News {
         this.id = id;
     }
 
-    public NewsCategory getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(NewsCategory category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -88,11 +86,11 @@ public class News {
         this.editor = editor;
     }
 
-    public Date getAddDate() {
-        return addDate;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setAddDate(Date addDate) {
-        this.addDate = addDate;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

@@ -2,30 +2,28 @@ package edu.hust.itec.model;
 
 import java.util.*;
 import javax.persistence.*;
-import javax.validation.constraints.*;
-import org.hibernate.validator.constraints.*;
 
 @Entity
-//@Table(indexes = {
-//        @Index(columnList = "name")
-//})
-public class NewsCategory {
+@Table(indexes = {
+        @Index(columnList = "name")
+})
+public class Category {
     @Id
     @GeneratedValue
     private Integer id;
 
     @Column(unique = true)
-    private String name;//热点新闻：生动态、学术交流、项目进展；通知公告：招生公告、招聘通知；
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private NewsCategory parent;
+    @JoinColumn(name = "parentId")
+    private Category parent;
 
 //    @OneToMany(mappedBy = "category")
 //    private List<News> newsList;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-    private List<NewsCategory> children;
+    private List<Category> children;
 
     @Transient
     private List<Integer> leavesId = new ArrayList<>();
@@ -46,19 +44,19 @@ public class NewsCategory {
         this.name = name;
     }
 
-    public List<NewsCategory> getChildren() {
+    public List<Category> getChildren() {
         return children;
     }
 
-    public void setChildren(List<NewsCategory> children) {
+    public void setChildren(List<Category> children) {
         this.children = children;
     }
 
-    public NewsCategory getParent() {
+    public Category getParent() {
         return parent;
     }
 
-    public void setParent(NewsCategory parent) {
+    public void setParent(Category parent) {
         this.parent = parent;
     }
 

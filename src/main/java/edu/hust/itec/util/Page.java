@@ -6,7 +6,7 @@ package edu.hust.itec.util;
 public class Page {
     private int pageSize = 10;
     private int pageNumber = 1;
-    private String columnName;
+    private String rootCategoryName;
     private String categoryName;
     private String pageAction;
 
@@ -93,11 +93,11 @@ public class Page {
         return firstResult;
     }
 
-    public String getColumnName() {
-        return columnName;
+    public String getRootCategoryName() {
+        return rootCategoryName;
     }
 
-    public void setColumnName(String columnName) {
-        this.columnName = columnName;
+    public void setRootCategoryName(String rootCategoryName) {
+        this.rootCategoryName = rootCategoryName;
     }
 }

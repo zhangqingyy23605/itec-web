@@ -86,7 +86,7 @@
                                                 </li>
                                             </ul>
                                         </td>
-                                        <td width="100px" align="right">[<fmt:formatDate value="${news.addDate}" pattern="yyyy-M-d"/>]</td>
+                                        <td width="100px" align="right">[<fmt:formatDate value="${news.createTime}" pattern="yyyy-M-d"/>]</td>
                                     </tr>
                                     <tr>
                                         <td height="3px" colspan="2"
