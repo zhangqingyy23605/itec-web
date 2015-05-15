@@ -5,7 +5,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(indexes = {
-        @Index(columnList = "name")
+        @Index(columnList = "name"),
+        @Index(columnList = "parentId")
 })
 public class Category {
     @Id

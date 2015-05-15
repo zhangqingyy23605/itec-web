@@ -1,17 +1,32 @@
 package edu.hust.itec.model;
 
+import javax.persistence.*;
+
 /**
- * Created by xsh on 2015/5/9.
+ * Created by xsh on 2015/5/15.
  */
+@Entity
 public class User {
+    @Id
+    @GeneratedValue
     private Integer id;
     private String username;
     private String password;
     private String fullname;
-    private Integer privilege;//0: root, 1: editor只能修改自己添加的, 2: 普通用户，登陆也只能查看
-    private String category;//教授、副教授、本科生、研究生
 
+    //0: 最高权限, 1: 能添加新闻并修改自己添加的新闻, 2: 普通用户，登陆只能填写个人信息
+    private Integer privilege = 2;
 
+    //教授、副教授、讲师、本科生、研究生、博士生
+    private UserType type;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -37,19 +52,19 @@ public class User {
         this.fullname = fullname;
     }
 
-    public int getPrivilege() {
+    public Integer getPrivilege() {
         return privilege;
     }
 
-    public void setPrivilege(int privilege) {
+    public void setPrivilege(Integer privilege) {
         this.privilege = privilege;
     }
 
-    public String getCategory() {
-        return category;
+    public UserType getType() {
+        return type;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setType(UserType type) {
+        this.type = type;
     }
 }
