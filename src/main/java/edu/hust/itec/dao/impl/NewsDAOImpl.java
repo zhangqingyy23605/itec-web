@@ -3,13 +3,11 @@ package edu.hust.itec.dao.impl;
 import edu.hust.itec.dao.NewsDAO;
 import edu.hust.itec.model.News;
 import edu.hust.itec.util.Page;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
-
-@Component("newsDAO")
-public class NewsDAOImpl extends CrudDAOImpl<News,Integer> implements NewsDAO {
+@Repository
+public class NewsDAOImpl extends CrudDAOImpl<News> implements NewsDAO {
 
     public Collection<News> getByCategory(Page page) {
         return super.getByCategory(page,

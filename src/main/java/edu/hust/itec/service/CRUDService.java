@@ -2,7 +2,6 @@ package edu.hust.itec.service;
 
 import edu.hust.itec.model.Category;
 import edu.hust.itec.util.Page;
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -10,13 +9,13 @@ import java.util.*;
  */
 
 // Create, Retrieve, Update and Delete
-public interface CrudService<T, ID extends Serializable> {
+public interface CrudService<T> {
     //item
     boolean saveOrUpdate(T t);
 
-    boolean deleteById(ID id);
+    boolean deleteById(Integer id);
 
-    T getById(ID id);
+    T getById(Integer id);
 
     //list
     Collection<T> getByCategory(Page page);

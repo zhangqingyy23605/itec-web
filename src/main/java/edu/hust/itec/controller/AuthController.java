@@ -1,20 +1,13 @@
 package edu.hust.itec.controller;
 
-import edu.hust.itec.model.News;
 import edu.hust.itec.model.User;
-import edu.hust.itec.service.AuthService;
-import edu.hust.itec.service.NewsService;
-import edu.hust.itec.util.Page;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import edu.hust.itec.service.CrudService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * Created by xsh on 2015/4/30.
@@ -25,7 +18,7 @@ import java.util.List;
 //@SessionAttributes({"user", "referer"})
 public class AuthController {
 //    @Autowired
-    private AuthService authService;
+//    private UserService authService;
 
     @RequestMapping
     public String authRoute(HttpServletRequest request, HttpSession session) {
@@ -44,7 +37,9 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginView() {
+    public String loginView(ModelMap model) {
+//        model.addAttribute("categoryList", authService.getCategoryLeaves());
+
         return "auth/login";
     }
 
@@ -80,7 +75,7 @@ public class AuthController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(User user, HttpSession session) {
 
-
+        System.out.println(user);
 //        authService.save(user);
 
         user.setUsername("root");

@@ -2,14 +2,13 @@ package edu.hust.itec.dao;
 
 import edu.hust.itec.model.Category;
 import edu.hust.itec.util.Page;
-import java.io.Serializable;
 import java.util.*;
 
-public interface CrudDAO<T, ID extends Serializable> {
+public interface CrudDAO<T> {
     //item
     boolean saveOrUpdate(T t);
-    boolean deleteById(ID id);
-    T getById(ID id);
+    boolean deleteById(Integer id);
+    T getById(Integer id);
 
     //list
     Collection<T> getByCategory(Page page);

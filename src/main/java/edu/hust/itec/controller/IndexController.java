@@ -1,6 +1,7 @@
 package edu.hust.itec.controller;
 
 import edu.hust.itec.model.News;
+import edu.hust.itec.service.CrudService;
 import edu.hust.itec.service.NewsService;
 import edu.hust.itec.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;

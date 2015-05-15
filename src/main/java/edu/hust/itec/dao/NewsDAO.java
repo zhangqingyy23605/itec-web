@@ -2,6 +2,9 @@ package edu.hust.itec.dao;
 
 import edu.hust.itec.model.News;
 
-public interface NewsDAO extends CrudDAO<News, Integer> {
+/**
+ * Created by xsh on 2015/5/15.
+ */
+public interface NewsDAO extends CrudDAO<News> {
 
 }

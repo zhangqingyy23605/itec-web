@@ -7,11 +7,10 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
-public abstract class CrudDAOImpl<T, ID extends Serializable> implements CrudDAO<T, ID> {
+public abstract class CrudDAOImpl<T> implements CrudDAO<T> {
 
     private Class<T> clazz;
     @SuppressWarnings("unchecked")
@@ -26,7 +25,7 @@ public abstract class CrudDAOImpl<T, ID extends Serializable> implements CrudDAO
         session.saveOrUpdate(t);
         return true;
     }
-    public boolean deleteById(ID id) {
+    public boolean deleteById(Integer id) {
         Session session = this.sessionFactory.getCurrentSession();
         Query query = session.createQuery("delete" + clazz.getName() + "t where t.id = :id");
         query.setParameter("id", id);
@@ -37,7 +36,7 @@ public abstract class CrudDAOImpl<T, ID extends Serializable> implements CrudDAO
         }
     }
     @SuppressWarnings("unchecked")
-    public T getById(ID id) {
+    public T getById(Integer id) {
         Session session = this.sessionFactory.getCurrentSession();
         return (T)session.get(clazz, id);
     }
@@ -91,13 +90,12 @@ public abstract class CrudDAOImpl<T, ID extends Serializable> implements CrudDAO
     private Collection<Category> categoryLeaves;
 
     //Begin initCategoryTree
-    public void initCategoryTree(String rootCategoryName) {
+    public void initCategoryTree(String rootCategoryName) { //TODO Code Review 寻找优化点
         this.rootCategoryName = rootCategoryName;
 
         Map<String, Category> categoryMap = new HashMap<>();
         List<Category> categoryLeaves = new ArrayList<>();
 
-        System.out.println("开始加载\"" + rootCategoryName + "\"分类信息");
         Category rootCategory = this.getCategoryByName(rootCategoryName);
         if (rootCategory == null) {
             System.out.println("数据库中不存在\"" + rootCategoryName + "\"的分类信息！");

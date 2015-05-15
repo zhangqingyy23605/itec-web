@@ -1,9 +1,10 @@
 package edu.hust.itec.service;
 
 import edu.hust.itec.model.News;
-import edu.hust.itec.model.Category;
+/**
+ * Created by xsh on 2015/5/13.
+ */
 
-import java.util.*;
+public interface NewsService extends CrudService<News> {
 
-public interface NewsService extends CrudService<News, Integer> {
 }
