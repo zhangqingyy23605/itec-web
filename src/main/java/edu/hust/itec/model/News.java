@@ -23,7 +23,7 @@ public class News {
     @NotBlank
     private String heading;
 
-    @Column(columnDefinition = "DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
 

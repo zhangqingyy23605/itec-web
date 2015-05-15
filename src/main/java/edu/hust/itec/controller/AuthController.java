@@ -1,7 +1,6 @@
 package edu.hust.itec.controller;
 
-import edu.hust.itec.model.User;
-import edu.hust.itec.service.CrudService;
+import edu.hust.itec.model.User.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;

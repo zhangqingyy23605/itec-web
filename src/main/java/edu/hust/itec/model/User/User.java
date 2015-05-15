@@ -1,6 +1,9 @@
-package edu.hust.itec.model;
+package edu.hust.itec.model.User;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by xsh on 2015/5/15.
@@ -10,14 +13,18 @@ public class User {
     @Id
     @GeneratedValue
     private Integer id;
+
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
+    @NotBlank
     private String fullname;
 
-    //0: 最高权限, 1: 能添加新闻并修改自己添加的新闻, 2: 普通用户，登陆只能填写个人信息
-    private Integer privilege = 2;
+    @NotNull
+    private UserPrivilege privilege = UserPrivilege.SELF;
 
-    //教授、副教授、讲师、本科生、研究生、博士生
+    @NotNull
     private UserType type;
 
     public Integer getId() {
@@ -52,11 +59,11 @@ public class User {
         this.fullname = fullname;
     }
 
-    public Integer getPrivilege() {
+    public UserPrivilege getPrivilege() {
         return privilege;
     }
 
-    public void setPrivilege(Integer privilege) {
+    public void setPrivilege(UserPrivilege privilege) {
         this.privilege = privilege;
     }
 
