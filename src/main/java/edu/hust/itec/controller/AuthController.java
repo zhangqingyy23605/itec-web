@@ -1,12 +1,14 @@
 package edu.hust.itec.controller;
 
-import edu.hust.itec.model.User.User;
+import edu.hust.itec.model.User;
+import edu.hust.itec.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 /**
  * Created by xsh on 2015/4/30.
@@ -16,8 +18,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/auth")
 //@SessionAttributes({"user", "referer"})
 public class AuthController {
-//    @Autowired
-//    private UserService authService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping
     public String authRoute(HttpServletRequest request, HttpSession session) {
@@ -72,12 +74,12 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(User user, HttpSession session) {
+    public String register(User user, HttpSession session, HttpServletRequest request) {
+        try {
+            userService.saveOrUpdate(user);
+        } catch (Exception e) {
 
-        System.out.println(user);
-//        authService.save(user);
-
-        user.setUsername("root");
+        }
         session.setAttribute("auth", user);
 
         String referer = (String)session.getAttribute("refererAuth");

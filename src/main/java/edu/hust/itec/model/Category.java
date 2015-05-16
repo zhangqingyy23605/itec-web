@@ -1,5 +1,7 @@
 package edu.hust.itec.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.*;
 import javax.persistence.*;
 
@@ -14,6 +16,7 @@ public class Category {
     private Integer id;
 
     @Column(unique = true)
+    @NotEmpty
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)

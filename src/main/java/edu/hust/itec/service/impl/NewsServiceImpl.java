@@ -1,6 +1,5 @@
 package edu.hust.itec.service.impl;
 
-import edu.hust.itec.dao.CrudDAO;
 import edu.hust.itec.dao.NewsDAO;
 import edu.hust.itec.model.News;
 import edu.hust.itec.service.NewsService;

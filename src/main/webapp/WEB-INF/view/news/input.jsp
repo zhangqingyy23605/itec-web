@@ -23,16 +23,16 @@
         </span>
     </div>
     <div class="frame_body">
-        <form:form action="/news" method="post" modelAttribute="news">
-            标题<form:input path="heading" />&nbsp;&nbsp;类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/>
-            <form:errors path="heading"/><br/>
+        <form:form action="/news/${news.id}" method="post" modelAttribute="news">
+            标题<form:input path="heading" /><form:errors path="heading" cssClass="error"/><br/>
+            &nbsp;&nbsp;类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/>
 
             <form:textarea path="content" rows="10" cols="30" id="ckeditor"></form:textarea>
-            <form:errors path="content"/>
+            <form:errors path="content" cssClass="error"/>
             <br/>
             <c:if test="${news.id == null}">
                 作者<form:input path="editor" value="${sessionScope.user.id}"/>
-                <form:errors path="editor"/>
+                <form:errors path="editor" cssClass="error"/>
                 <br/>
             </c:if>
             <c:if test="${news.id != null}">

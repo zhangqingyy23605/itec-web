@@ -3,6 +3,7 @@ package edu.hust.itec.model;
 
 import org.hibernate.validator.constraints.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -17,23 +18,25 @@ public class News {
 
 //    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryId", nullable = false)
+    @JoinColumn(name = "categoryId")
+    @NotNull(message = "类别不能为空")
     private Category category;
 
-    @NotBlank
+    @NotBlank(message = "标题不能为空")
     private String heading;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
 
     @Column(columnDefinition = "MEDIUMTEXT")
-    @NotBlank
+    @NotBlank(message = "正文不能为空")
     private String content;
 
 //    @Column(name = "editor_id")
-    @NotBlank
+    @NotBlank(message = "作者不能为空")
     private String editor;
+    //TODO news editor 由改为 User类型的 editor_id：做用户管理的时候改进
 
 //    private int numberOfVisit;
 

@@ -1,5 +1,6 @@
-package edu.hust.itec.model.User;
+package edu.hust.itec.model;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -9,23 +10,35 @@ import javax.validation.constraints.NotNull;
  * Created by xsh on 2015/5/15.
  */
 @Entity
+@Table(indexes = {
+        @Index(columnList = "email"),
+        @Index(columnList = "privilege"),
+        @Index(columnList = "type")
+})
 public class User {
     @Id
     @GeneratedValue
     private Integer id;
 
+    @Column(unique = true)
     @NotBlank
     private String username;
+
     @NotBlank
     private String password;
+
     @NotBlank
     private String fullname;
 
+    @Email
     @NotNull
-    private UserPrivilege privilege = UserPrivilege.SELF;
+    private String email;
 
     @NotNull
-    private UserType type;
+    private Privilege privilege = Privilege.SELF;
+
+    @NotNull
+    private Type type;
 
     public Integer getId() {
         return id;
@@ -59,19 +72,42 @@ public class User {
         this.fullname = fullname;
     }
 
-    public UserPrivilege getPrivilege() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Privilege getPrivilege() {
         return privilege;
     }
 
-    public void setPrivilege(UserPrivilege privilege) {
+    public void setPrivilege(Privilege privilege) {
         this.privilege = privilege;
     }
 
-    public UserType getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(UserType type) {
+    public void setType(Type type) {
         this.type = type;
     }
+
+    public enum Privilege {
+        ROOT, EDITOR, SELF, FORBIDDEN
+    /*
+    0: 最高权限
+    1: 能添加新闻并修改自己添加的新闻
+    2: 普通用户，登陆只能填写个人信息
+    3: 禁止登陆（需要管理员通过）
+    */
+    }
+
+    public enum Type {
+        TEACHER, STUDENT
+    }
+
 }

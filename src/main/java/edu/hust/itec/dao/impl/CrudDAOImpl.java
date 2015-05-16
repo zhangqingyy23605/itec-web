@@ -27,7 +27,7 @@ public abstract class CrudDAOImpl<T> implements CrudDAO<T> {
     }
     public boolean deleteById(Integer id) {
         Session session = this.sessionFactory.getCurrentSession();
-        Query query = session.createQuery("delete" + clazz.getName() + "t where t.id = :id");
+        Query query = session.createQuery("delete " + clazz.getName() + " t where t.id = :id");
         query.setParameter("id", id);
         if (query.executeUpdate() == 0 ) {
             return false;
