@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.PostConstruct;
@@ -104,8 +103,7 @@ public class NewsController {
             redirectAttributes.addFlashAttribute("news", news);
             return "redirect:/news/add";
         }
-        this.newsService.saveOrUpdate(news);//TODO 回到新添加的新闻的正文，需要有能返回id的save方法
-        return "redirect:/news";
+        return "redirect:/news/" + this.newsService.save(news);
     }
 
     //编辑新闻
@@ -129,7 +127,7 @@ public class NewsController {
             redirectAttributes.addFlashAttribute("news", news);
             return "redirect:/news/" + news.getId() + "/edit";
         }
-        this.newsService.saveOrUpdate(news);
+        this.newsService.update(news);
         return "redirect:/news/" + news.getId();
     }
 

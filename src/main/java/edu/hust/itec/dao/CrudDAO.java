@@ -6,8 +6,9 @@ import java.util.*;
 
 public interface CrudDAO<T> {
     //item
-    boolean saveOrUpdate(T t);
+    Integer save(T t);
     boolean deleteById(Integer id);
+    void update(T t);
     T getById(Integer id);
 
     //list

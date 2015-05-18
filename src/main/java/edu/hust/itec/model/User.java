@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
+import org.hibernate.type.EnumType;
 /**
  * Created by xsh on 2015/5/15.
  */
@@ -35,9 +35,11 @@ public class User {
     private String email;
 
     @NotNull
+    @Enumerated
     private Privilege privilege = Privilege.SELF;
 
     @NotNull
+    @Enumerated
     private Type type;
 
     public Integer getId() {

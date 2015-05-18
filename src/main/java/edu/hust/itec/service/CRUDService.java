@@ -11,9 +11,11 @@ import java.util.*;
 // Create, Retrieve, Update and Delete
 public interface CrudService<T> {
     //item
-    boolean saveOrUpdate(T t);
+    Integer save(T t);
 
     boolean deleteById(Integer id);
+
+    void update(T t);
 
     T getById(Integer id);
 

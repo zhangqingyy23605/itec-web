@@ -8,6 +8,6 @@ import edu.hust.itec.model.User;
 
 public interface UserService extends CrudService<User> {
 
-    boolean validate(User user);
+    User get(User user);
 
 }

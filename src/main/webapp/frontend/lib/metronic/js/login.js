@@ -105,7 +105,16 @@ var Login = function () {
                 ignore: "",
                 rules: {
                     username: {
-                        required: true
+                        required: true,
+                        remote: {
+                            url: "/auth/exists",
+                            type: "get",
+                            data: {
+                                username: function() {
+                                    return $(".register-form input[name='username']").val();
+                                }
+                            },
+                        }
                     },
                     password: {
                         required: true
@@ -122,6 +131,9 @@ var Login = function () {
                     }
                 },
                 messages: { // custom messages for radio buttons and checkboxes
+                    username: {
+                        remote: $.validator.format("用户名{0}已经被使用")
+                    },
                     type: {
                         required: "该字段不能为空"
                     }

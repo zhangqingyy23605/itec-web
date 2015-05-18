@@ -20,10 +20,9 @@ public abstract class CrudDAOImpl<T> implements CrudDAO<T> {
     }
 
     //item
-    public boolean saveOrUpdate(T t) {
+    public Integer save(T t) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.saveOrUpdate(t);
-        return true;
+        return (Integer)session.save(t);
     }
     public boolean deleteById(Integer id) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -34,6 +33,10 @@ public abstract class CrudDAOImpl<T> implements CrudDAO<T> {
         } else {
             return true;
         }
+    }
+    public void update(T t) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.update(t);
     }
     @SuppressWarnings("unchecked")
     public T getById(Integer id) {

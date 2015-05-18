@@ -12,11 +12,14 @@ import java.util.Collection;
 @Transactional
 public abstract class CrudServiceImpl<T, SomeDAO extends CrudDAO<T>> implements CrudService<T> {
     //item
-    public boolean saveOrUpdate(T t) {
-        return this.someDAO.saveOrUpdate(t);
+    public Integer save(T t) {
+        return this.someDAO.save(t);
     }
     public boolean deleteById(Integer id) {
         return this.someDAO.deleteById(id);
+    }
+    public void update(T t) {
+        this.someDAO.save(t);
     }
     public T getById(Integer id) {
         return this.someDAO.getById(id);

@@ -11,9 +11,9 @@ import javax.transaction.Transactional;
 @Transactional
 public class NewsServiceImpl extends CrudServiceImpl<News, NewsDAO> implements NewsService {
     //item
-    public boolean saveOrUpdate(News news) {
+    public void update(News news) {
         //news.setModifiedTime(new Date());
-        return super.saveOrUpdate(news);
+        super.update(news);
     }
     public News getById(Integer id) {
         //this.newsDAO.addTimesOfVisitById(id);
