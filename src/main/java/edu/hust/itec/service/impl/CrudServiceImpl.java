@@ -19,7 +19,7 @@ public abstract class CrudServiceImpl<T, SomeDAO extends CrudDAO<T>> implements 
         return this.someDAO.deleteById(id);
     }
     public void update(T t) {
-        this.someDAO.save(t);
+        this.someDAO.update(t);
     }
     public T getById(Integer id) {
         return this.someDAO.getById(id);

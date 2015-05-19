@@ -107,7 +107,7 @@ var Login = function () {
                     username: {
                         required: true,
                         remote: {
-                            url: "/auth/exists",
+                            url: "/auth/validUsername",
                             type: "get",
                             data: {
                                 username: function() {

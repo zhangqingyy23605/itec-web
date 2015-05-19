@@ -36,6 +36,7 @@ public abstract class CrudDAOImpl<T> implements CrudDAO<T> {
     }
     public void update(T t) {
         Session session = this.sessionFactory.getCurrentSession();
+        session.flush();
         session.update(t);
     }
     @SuppressWarnings("unchecked")

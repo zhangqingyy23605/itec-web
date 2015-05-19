@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<link href="/frontend/css/global.css" rel="stylesheet" type="text/css" />
 <!-- Add jQuery library -->
 <script type="text/javascript" src="/frontend/lib/jquery-1.10.1.min.js"></script>
 <!-- Add fancyBox -->

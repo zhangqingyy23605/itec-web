@@ -1,11 +1,16 @@
 package edu.hust.itec.controller;
 
+import edu.hust.itec.model.Student;
+import edu.hust.itec.model.Teacher;
 import edu.hust.itec.model.User;
 import edu.hust.itec.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin.javascript.ReflectUtil;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -16,7 +21,6 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/auth")
-//@SessionAttributes({"user", "referer"})
 public class AuthController {
     @Autowired
     private UserService userService;
@@ -54,7 +58,7 @@ public class AuthController {
     }
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(User user, BindingResult result, HttpSession session) {
-        //TODO 用户名密码错误的处理
+        //TODO 用户名密码错误的回显
         User resultUser = userService.get(user);
         if (resultUser == null) {
             result.rejectValue("username", "用户名或密码错误");
@@ -89,13 +93,20 @@ public class AuthController {
         if (userService.get(username) != null) {
             result.rejectValue("username", "用户名" + username + "已经被使用");
         }
+        String type = user.getType();
+        if (type == "TEACHER") {
+            userService.save(new Teacher(user));
+        } else if (type == "STUDENT") {
+            userService.save(new Student(user));
+        } else {
+            result.rejectValue("type", "用户类型为教师或者学生");
+        }
         if(result.hasErrors()) {
             return "redirect:/auth/login";
         }
-        userService.save(user);
+
         session.setAttribute("auth", user);
         return "redirect:/auth/back";
     }
-
     //TODO 邮箱验证；找回密码
 }

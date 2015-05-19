@@ -3,6 +3,7 @@ package edu.hust.itec.model;
 
 import org.hibernate.validator.constraints.*;
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
@@ -33,9 +34,8 @@ public class News {
     @NotBlank(message = "正文不能为空")
     private String content;
 
-//    @Column(name = "editor_id")
-    @NotBlank(message = "作者不能为空")
-    private String editor;
+    @ManyToOne
+    private User editor;
     //TODO news editor 由改为 User类型的 editor_id：做用户管理的时候改进
 
 //    private int numberOfVisit;
@@ -81,11 +81,11 @@ public class News {
         this.content = content;
     }
 
-    public String getEditor() {
+    public User getEditor() {
         return editor;
     }
 
-    public void setEditor(String editor) {
+    public void setEditor(User editor) {
         this.editor = editor;
     }
 

@@ -24,6 +24,7 @@
     <mvc:resources mapping="/frontend/**" location="/frontend/" />
     <mvc:resources mapping="/image/**" location="/image/" />
     <mvc:resources mapping="/upfiles/**" location="/upfiles/" />
+    <mvc:resources mapping="/assets/**" location="/assets/" />
 
     <!-- 指定试图解析器参数-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

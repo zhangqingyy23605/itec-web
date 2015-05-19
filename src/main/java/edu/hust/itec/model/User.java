@@ -6,19 +6,27 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import org.hibernate.type.EnumType;
+import org.springframework.util.ReflectionUtils;
+
 /**
  * Created by xsh on 2015/5/15.
  */
 @Entity
 @Table(indexes = {
         @Index(columnList = "email"),
-        @Index(columnList = "privilege"),
-        @Index(columnList = "type")
+        @Index(columnList = "privilege")
+        //,@Index(columnList = "type")
 })
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public class User {
     @Id
     @GeneratedValue
     private Integer id;
+
+    @NotNull
+    @Column(insertable = false, updatable = false)
+    private String type;
 
     @Column(unique = true)
     @NotBlank
@@ -38,9 +46,12 @@ public class User {
     @Enumerated
     private Privilege privilege = Privilege.SELF;
 
-    @NotNull
-    @Enumerated
-    private Type type;
+    public User() {
+
+    }
+    public User(User user) {
+        ReflectionUtils.shallowCopyFieldState(user, this);
+    }
 
     public Integer getId() {
         return id;
@@ -90,12 +101,16 @@ public class User {
         this.privilege = privilege;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(String type) {
         this.type = type;
+    }
+
+    public enum Type {
+        TEACHER, STUDENT
     }
 
     public enum Privilege {
@@ -107,9 +122,4 @@ public class User {
     3: 禁止登陆（需要管理员通过）
     */
     }
-
-    public enum Type {
-        TEACHER, STUDENT
-    }
-
 }

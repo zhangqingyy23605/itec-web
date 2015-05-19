@@ -23,7 +23,7 @@
         </span>
     </div>
     <div class="frame_body">
-        <form:form action="/news/${news.id}" method="post" modelAttribute="news">
+        <form:form action="/news" method="post" modelAttribute="news">
             标题<form:input path="heading" /><form:errors path="heading" cssClass="error"/><br/>
             &nbsp;&nbsp;类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/>
 
@@ -31,12 +31,13 @@
             <form:errors path="content" cssClass="error"/>
             <br/>
             <c:if test="${news.id == null}">
-                作者<form:input path="editor" value="${sessionScope.user.id}"/>
-                <form:errors path="editor" cssClass="error"/>
+                作者<form:input path="editor.id" value="${auth.id}" readonly="true"/>
+                <form:errors path="editor.id" cssClass="error"/>
                 <br/>
             </c:if>
             <c:if test="${news.id != null}">
                 <form:hidden path="id"/>
+                <form:hidden path="editor.id" />
                 <input type="hidden" name="_method" value="put"/>
             </c:if>
             <input type="submit" value="<c:if test="${news.id == null}">添加</c:if><c:if test="${news.id != null}">修改</c:if>">

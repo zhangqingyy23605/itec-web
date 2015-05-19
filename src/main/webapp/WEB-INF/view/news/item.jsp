@@ -27,7 +27,7 @@
         </div>
         <div class="news_info">
             <span>日期：<fmt:formatDate value="${news.createTime}" pattern="yyyy-M-d"/>&nbsp;</span>
-            <span>作者：${news.editor}&nbsp;</span>
+            <span>作者：${news.editor.fullname}&nbsp;</span>
             <span>操作：</span>
             <span href="/news/${news.id}/edit" class="edit">[编辑]</span>
             <span href="/news/${news.id}" class="delete">[删除]</span>

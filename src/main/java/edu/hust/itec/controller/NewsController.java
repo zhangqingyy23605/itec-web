@@ -22,7 +22,6 @@ import java.util.*;
  */
 
 @Controller
-@SessionAttributes("news")
 @RequestMapping("/news")
 public class NewsController {
     @Autowired
@@ -98,6 +97,9 @@ public class NewsController {
     }
     @RequestMapping(method = RequestMethod.POST)
     public String addItem(@Valid News news, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (news.getEditor().getId() == null) {
+            result.rejectValue("editor.id", "editor is null", "作者不能为空，请先登录");
+        }
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "news", result);
             redirectAttributes.addFlashAttribute("news", news);
@@ -114,12 +116,12 @@ public class NewsController {
         }
         return "forward:/news/input";
     }
-    @RequestMapping(value = "/{newsId}", method = RequestMethod.PUT)
-    public String prepareNews(@PathVariable Integer newsId, ModelMap model) {
-        News existingNews = this.newsService.getById(newsId);
-        model.addAttribute("news", existingNews);
-        return "forward:/news";
-    }
+//    @RequestMapping(value = "/{newsId}", method = RequestMethod.PUT)
+//    public String prepareNews(@PathVariable Integer newsId, ModelMap model) {
+//        News existingNews = this.newsService.getById(newsId);
+//        model.addAttribute("news", existingNews);
+//        return "forward:/news";
+//    }
     @RequestMapping(method = RequestMethod.PUT)
     public String editItem(@Valid News news, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
