@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -89,67 +92,7 @@
 
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
-	<!-- BEGIN SIDEBAR -->
-	<div class="page-sidebar-wrapper">
-		<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-		<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-		<div class="page-sidebar navbar-collapse collapse">
-			<!-- BEGIN SIDEBAR MENU -->
-			<!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
-			<!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
-			<!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
-			<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
-			<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
-			<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-                <li class="heading">
-                    <h3 class="uppercase">管理后台</h3>
-                </li>
-				<li class="start">
-					<a href="javascript:;">
-					<i class="icon-home"></i>
-					<span class="title">个人主页</span>
-					</a>
-				</li>
-				<li>
-					<a href="javascript:;">
-					<i class="icon-basket"></i>
-					<span class="title">eCommerce</span>
-					<span class="arrow "></span>
-					</a>
-					<ul class="sub-menu">
-						<li>
-							<a href="ecommerce_index.html">
-							<i class="icon-home"></i>
-							Dashboard</a>
-						</li>
-						<li>
-							<a href="ecommerce_orders.html">
-							<i class="icon-basket"></i>
-							Orders</a>
-						</li>
-						<li>
-							<a href="ecommerce_orders_view.html">
-							<i class="icon-tag"></i>
-							Order View</a>
-						</li>
-						<li>
-							<a href="ecommerce_products.html">
-							<i class="icon-handbag"></i>
-							Products</a>
-						</li>
-						<li>
-							<a href="ecommerce_products_edit.html">
-							<i class="icon-pencil"></i>
-							Product Edit</a>
-						</li>
-					</ul>
-				</li>
-			</ul>
-			<!-- END SIDEBAR MENU -->
-		</div>
-	</div>
-	<!-- END SIDEBAR -->
+    <jsp:include page="/WEB-INF/view/admin/sidebar.jsp"/>
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 		<div class="page-content">
@@ -184,34 +127,52 @@
                             <div class="col-md-9">
                                 <div class="tab-content">
                                     <div id="tab_1-1" class="tab-pane active">
-                                        <form role="form" action="#">
+                                        <form:form role="form" action="/admin/user" modelAttribute="user" method="post">
+                                            <input type="hidden" name="_method" value="put"/>
+                                            <form:hidden path="id"/>
                                             <div class="form-group">
-                                                <label class="control-label">姓名</label>
-                                                <input type="text" placeholder="${auth.fullname}" class="form-control"/>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">电子邮箱</label>
-                                                <input type="text" placeholder="${auth.email}" class="form-control"/>
+                                                <label class="control-label">类型</label>
+                                                <form:input path="type" class="form-control" readonly="true"/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">权限</label>
-                                                <input type="text" placeholder="${auth.privilege}" class="form-control" disabled/>
+                                                <form:input path="privilege" class="form-control" readonly="true"/>
                                             </div>
-                                            <c:if test="${auth.type == User.Type.TEACHER}">
+                                            <div class="form-group">
+                                                <label class="control-label">姓名</label>
+                                                <form:input path="fullname" class="form-control"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">电子邮箱</label>
+                                                <form:input path="email" class="form-control"/>
+                                            </div>
+                                            <c:if test="${user.type.toString() == 'TEACHER'}">
                                                 教师可见
                                             <div class="form-group">
-                                                <label class="control-label">个人简介</label>
-                                                <textarea class="form-control" rows="3" placeholder="We are KeenThemes!!!"></textarea>
+                                                <label class="control-label">个人网站</label>
+                                                <form:input path="website" class="form-control"/>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label">网站</label>
-                                                <input type="text" placeholder="http://www.mywebsite.com" class="form-control"/>
+                                                <label class="control-label">个人简介</label>
+                                                <form:textarea path="intro" class="form-control" rows="3"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">研究组</label>
+                                                <form:input path="researchGroup" class="form-control"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">研究方向</label>
+                                                <form:textarea path="researchAreas" class="form-control" rows="3"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">教授课程</label>
+                                                <form:textarea path="courses" class="form-control" rows="3"></form:textarea>
                                             </div>
                                             </c:if>
                                             <div class="margiv-top-10">
-                                                <a href="#" class="btn green">提交修改</a>
+                                                <input type="submit" value="提交修改" class="btn green"/>
                                             </div>
-                                        </form>
+                                        </form:form>
                                     </div>
                                     <div id="tab_2-2" class="tab-pane">
                                         <form action="#" role="form">

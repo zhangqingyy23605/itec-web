@@ -14,6 +14,7 @@ public class Teacher extends User {
     //TODO 个人主页，个人简介，所属实验室，教授课程，研究方向
 
     String website;
+    String intro;
     String researchGroup;
     String courses;
     String researchAreas;
@@ -31,6 +32,14 @@ public class Teacher extends User {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 
     public String getResearchGroup() {

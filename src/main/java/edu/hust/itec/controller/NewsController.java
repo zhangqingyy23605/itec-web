@@ -5,6 +5,7 @@ import edu.hust.itec.model.News;
 import edu.hust.itec.service.NewsService;
 import edu.hust.itec.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -116,12 +117,12 @@ public class NewsController {
         }
         return "forward:/news/input";
     }
-//    @RequestMapping(value = "/{newsId}", method = RequestMethod.PUT)
-//    public String prepareNews(@PathVariable Integer newsId, ModelMap model) {
-//        News existingNews = this.newsService.getById(newsId);
-//        model.addAttribute("news", existingNews);
-//        return "forward:/news";
-//    }
+    @ModelAttribute
+    public void getNews(@RequestParam(value = "id", required = false) Integer newsId, ModelMap model) {
+        if(newsId != null) {//是修改操作
+            model.addAttribute("news", this.newsService.getById(newsId));
+        }
+    }
     @RequestMapping(method = RequestMethod.PUT)
     public String editItem(@Valid News news, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {

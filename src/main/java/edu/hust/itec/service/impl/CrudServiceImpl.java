@@ -4,7 +4,6 @@ import edu.hust.itec.dao.CrudDAO;
 import edu.hust.itec.model.Category;
 import edu.hust.itec.service.CrudService;
 import edu.hust.itec.util.Page;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
