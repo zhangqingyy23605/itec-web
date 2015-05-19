@@ -109,9 +109,9 @@ public class User {
         this.type = type;
     }
 
-    public enum Type {
-        TEACHER, STUDENT
-    }
+//    public enum Type {
+//        TEACHER, STUDENT
+//    }
 
     public enum Privilege {
         ROOT, EDITOR, SELF, FORBIDDEN

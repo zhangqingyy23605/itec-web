@@ -1,9 +1,6 @@
 package edu.hust.itec.model;
 
-import org.hibernate.usertype.UserType;
-
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
  * Created by xsh on 2015/5/18.
@@ -14,10 +11,10 @@ public class Teacher extends User {
     //TODO 个人主页，个人简介，所属实验室，教授课程，研究方向
 
     String website;
-    String intro;
+    String introduction;
     String researchGroup;
-    String courses;
     String researchAreas;
+    String teachingCourses;
 
     public Teacher() {
 
@@ -34,12 +31,12 @@ public class Teacher extends User {
         this.website = website;
     }
 
-    public String getIntro() {
-        return intro;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setIntro(String intro) {
-        this.intro = intro;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
     public String getResearchGroup() {
@@ -50,12 +47,12 @@ public class Teacher extends User {
         this.researchGroup = researchGroup;
     }
 
-    public String getCourses() {
-        return courses;
+    public String getTeachingCourses() {
+        return teachingCourses;
     }
 
-    public void setCourses(String courses) {
-        this.courses = courses;
+    public void setTeachingCourses(String teachingCourses) {
+        this.teachingCourses = teachingCourses;
     }
 
     public String getResearchAreas() {

@@ -40,19 +40,9 @@
         <span class="header_menu_item">
             <a href="/libraryAction!library">图书馆</a>
         </span>
-        <c:if test="${auth == null}">
-        <span class="header_menu_item">
-            <a href="/auth">登陆</a>
-        </span>
-        </c:if>
-        <c:if test="${auth != null}">
         <span class="header_menu_item">
             <a href="/admin">后台管理</a>
         </span>
-        <span class="header_menu_item">
-            <a href="/auth">注销 ${auth.username}</a>
-        </span>
-        </c:if>
         <span id="thx">
             <a href="#thx_message" class="fancybox"><img src="/image/thx.png" /></a>
             <div id="thx_message">

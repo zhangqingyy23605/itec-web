@@ -41,7 +41,7 @@
     <!--自定义拦截器-->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/news"/>
+            <mvc:mapping path="/admin/**"/>
             <bean class="edu.hust.itec.interceptor.AuthInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

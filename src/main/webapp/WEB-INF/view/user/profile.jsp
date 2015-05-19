@@ -77,7 +77,7 @@
 				<!-- BEGIN QUICK SIDEBAR TOGGLER -->
 				<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
 				<li class="dropdown dropdown-quick-sidebar-toggler">
-					<a href="/" class="dropdown-toggle">
+					<a href="/auth/logout" class="dropdown-toggle">
 					<i class="icon-logout"></i>
 					</a>
 				</li>
@@ -98,7 +98,7 @@
 		<div class="page-content">
 			<!-- BEGIN PAGE HEADER-->
 			<h3 class="page-title">
-                个人主页
+                个人中心
 			</h3>
 			<!-- END PAGE HEADER-->
 			<!-- BEGIN PAGE CONTENT-->
@@ -146,7 +146,7 @@
                                                 <label class="control-label">电子邮箱</label>
                                                 <form:input path="email" class="form-control"/>
                                             </div>
-                                            <c:if test="${user.type.toString() == 'TEACHER'}">
+                                            <c:if test="${user.type == 'TEACHER'}">
                                                 教师可见
                                             <div class="form-group">
                                                 <label class="control-label">个人网站</label>
@@ -154,7 +154,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">个人简介</label>
-                                                <form:textarea path="intro" class="form-control" rows="3"/>
+                                                <form:textarea path="introduction" class="form-control" rows="3"/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">研究组</label>
@@ -166,8 +166,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">教授课程</label>
-                                                <form:textarea path="courses" class="form-control" rows="3"></form:textarea>
+                                                <form:textarea path="teachingCourses" class="form-control" rows="3"></form:textarea>
                                             </div>
+                                            </c:if>
+                                            <c:if test="${user.type == 'STUDENT'}">
+                                                <div class="form-group">
+                                                    <label class="control-label">导师</label>
+                                                    <form:select path="mentor.id" items="${teachers}" itemLabel="fullname" itemValue="id"/>
+                                                </div>
                                             </c:if>
                                             <div class="margiv-top-10">
                                                 <input type="submit" value="提交修改" class="btn green"/>

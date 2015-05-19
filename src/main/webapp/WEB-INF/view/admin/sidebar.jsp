@@ -23,12 +23,14 @@
                 <a href="/admin/profile">
                     <i class="icon-home"></i>
                     <span class="title">个人中心</span>
+                    <span class="selected"></span>
                 </a>
             </li>
             <li>
                 <a href="/admin/user">
                     <i class="icon-user"></i>
                     <span class="title">用户管理</span>
+                    <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
                     <li>
