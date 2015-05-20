@@ -1,5 +1,6 @@
 package edu.hust.itec.service;
 
+import edu.hust.itec.model.Category;
 import edu.hust.itec.model.News;
 
 /**

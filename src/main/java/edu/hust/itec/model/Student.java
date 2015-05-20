@@ -17,7 +17,6 @@ public class Student extends User {
         super(user);
     }
 
-    @ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
     private Teacher mentor;
 

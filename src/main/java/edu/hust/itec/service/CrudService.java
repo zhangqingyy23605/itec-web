@@ -25,6 +25,8 @@ public interface CrudService<T> {
     //category
     void initCategoryTree(String rootCategoryName);
 
+    Category getCateogyrByName(String categoryName);
+
     Category getRootCategory();//获得左侧导航栏
 
     Collection<Category> getCategoryLeaves();//添加条目时，需要知道所有叶子分类

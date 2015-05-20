@@ -38,6 +38,10 @@ public abstract class CrudServiceImpl<T, SomeDAO extends CrudDAO<T>> implements 
         return this.someDAO.getRootCategory();
     }
 
+    public Category getCateogyrByName(String categoryName) {
+        return this.someDAO.getCategoryByName(categoryName);
+    }
+
     public Collection<Category> getCategoryLeaves() {
         return this.someDAO.getCategoryLeaves();
     }

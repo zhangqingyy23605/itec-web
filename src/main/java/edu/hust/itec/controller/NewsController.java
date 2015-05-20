@@ -2,6 +2,7 @@ package edu.hust.itec.controller;
 
 import edu.hust.itec.model.Category;
 import edu.hust.itec.model.News;
+import edu.hust.itec.propertyeditor.NewsPropertyEditor;
 import edu.hust.itec.service.NewsService;
 import edu.hust.itec.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -120,7 +122,8 @@ public class NewsController {
     @ModelAttribute
     public void getNews(@RequestParam(value = "id", required = false) Integer newsId, ModelMap model) {
         if(newsId != null) {//是修改操作
-            model.addAttribute("news", this.newsService.getById(newsId));
+            News news = this.newsService.getById(newsId);
+            model.addAttribute("news", news);
         }
     }
     @RequestMapping(method = RequestMethod.PUT)
@@ -130,9 +133,17 @@ public class NewsController {
             redirectAttributes.addFlashAttribute("news", news);
             return "redirect:/news/" + news.getId() + "/edit";
         }
+        Category newCateogyry = new Category();
+        newCateogyry.setId(news.getCategory().getId());
+        news.setCategory(newCateogyry);
         this.newsService.update(news);
         return "redirect:/news/" + news.getId();
     }
+
+//    @InitBinder
+//    private void registerPropertyEditor(DataBinder binder) {
+//        binder.registerCustomEditor(News.class, "category.id", new NewsPropertyEditor(this.newsService));
+//    }
 
     //练习用
     @RequestMapping("/uploadfile")

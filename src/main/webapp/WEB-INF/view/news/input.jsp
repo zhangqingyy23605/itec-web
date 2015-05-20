@@ -25,7 +25,16 @@
     <div class="frame_body">
         <form:form action="/news" method="post" modelAttribute="news">
             标题<form:input path="heading" /><form:errors path="heading" cssClass="error"/><br/>
-            &nbsp;&nbsp;类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/>
+            &nbsp;&nbsp;
+
+            类别<form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/>
+
+            <%--类别--%>
+            <%--<form:select path="category">--%>
+                <%--&lt;%&ndash;<form:option value="NONE" label="无"/>&ndash;%&gt;--%>
+                <%--<form:options items="${categoryList}" itemValue="name" itemLabel="name"/>--%>
+            <%--</form:select>--%>
+
 
             <form:textarea path="content" rows="10" cols="30" id="ckeditor"></form:textarea>
             <form:errors path="content" cssClass="error"/>

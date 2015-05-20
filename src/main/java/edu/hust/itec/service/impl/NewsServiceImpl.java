@@ -1,6 +1,7 @@
 package edu.hust.itec.service.impl;
 
 import edu.hust.itec.dao.NewsDAO;
+import edu.hust.itec.model.Category;
 import edu.hust.itec.model.News;
 import edu.hust.itec.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class NewsServiceImpl extends CrudServiceImpl<News, NewsDAO> implements N
     public News getById(Integer id) {
         //this.newsDAO.addTimesOfVisitById(id);
         return super.getById(id);
+    }
+
+    public Category getCateogyrByName(String categoryName) {
+        return this.someDAO.getCategoryByName(categoryName);
     }
 
     @Autowired

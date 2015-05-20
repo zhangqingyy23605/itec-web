@@ -17,5 +17,6 @@ public interface CrudDAO<T> {
     //category
     void initCategoryTree(String rootCategoryName);
     Category getRootCategory();
+    Category getCategoryByName(String categoryName);
     Collection<Category> getCategoryLeaves();
 }

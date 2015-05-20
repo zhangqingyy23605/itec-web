@@ -36,7 +36,6 @@ public abstract class CrudDAOImpl<T> implements CrudDAO<T> {
     }
     public void update(T t) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.flush();
         session.update(t);
     }
     @SuppressWarnings("unchecked")
@@ -100,7 +99,11 @@ public abstract class CrudDAOImpl<T> implements CrudDAO<T> {
         Map<String, Category> categoryMap = new HashMap<>();
         List<Category> categoryLeaves = new ArrayList<>();
 
-        Category rootCategory = this.getCategoryByName(rootCategoryName);
+        //get rootCateogory
+        Session session = this.sessionFactory.getCurrentSession();
+        Query query = session.createQuery("select c from Category c where name=:name");
+        query.setString("name", rootCategoryName);
+        Category rootCategory = (Category)query.uniqueResult();
         if (rootCategory == null) {
             System.out.println("数据库中不存在\"" + rootCategoryName + "\"的分类信息！");
         } else {
@@ -112,11 +115,9 @@ public abstract class CrudDAOImpl<T> implements CrudDAO<T> {
         this.categoryMap = categoryMap;
         this.categoryLeaves = categoryLeaves;
     }
+
     public Category getCategoryByName(String categoryName) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Query query = session.createQuery("select c from Category c where name=:name");
-        query.setString("name", categoryName);
-        return (Category)query.uniqueResult();
+        return this.categoryMap.get("categoryName");
     }
     private void generateCategoryMap(Category rootCategory, Map<String, Category> categoryMap) {
         Queue<Category> queue = new LinkedList<>();
