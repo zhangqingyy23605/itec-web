@@ -65,6 +65,9 @@ public class AuthController {
         if (userService.getByExample(username) != null) {
             result.rejectValue("username", "用户名" + username + "已经被使用");
         }
+        //设置默认权限
+        user.setPrivilege(User.Privilege.SELF);
+
         Integer userId;
         String type = user.getType();
         if (type.equalsIgnoreCase("TEACHER") ) {

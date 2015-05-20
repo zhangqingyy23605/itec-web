@@ -44,7 +44,7 @@ public class User {
 
     @NotNull
     @Enumerated
-    private Privilege privilege = Privilege.SELF;
+    private Privilege privilege;
 
     public User() {
 
