@@ -74,7 +74,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 			<!-- BEGIN PAGE HEADER-->
 			<h3 class="page-title">
-			Editable Datatables <small>editable datatable samples</small>
+			用户管理<small>${page.categoryName}</small>
 			</h3>
 			<div class="page-bar">
 				<ul class="page-breadcrumb">

@@ -2,15 +2,12 @@ package edu.hust.itec.controller;
 
 import edu.hust.itec.model.Category;
 import edu.hust.itec.model.News;
-import edu.hust.itec.propertyeditor.NewsPropertyEditor;
 import edu.hust.itec.service.NewsService;
 import edu.hust.itec.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -114,7 +111,7 @@ public class NewsController {
     //编辑新闻
     @RequestMapping(value = "/{newsId}/edit", method = RequestMethod.GET)
     public String editItemView(@PathVariable Integer newsId, ModelMap model) {
-        if(!model.containsAttribute("news")) {//首次更新
+        if(!model.containsAttribute("news")) {//进入编辑
             model.addAttribute("news", this.newsService.getById(newsId));
         }
         return "forward:/news/input";

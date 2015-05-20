@@ -1,13 +1,13 @@
 package edu.hust.itec.controller;
 
-import edu.hust.itec.model.Student;
-import edu.hust.itec.model.Teacher;
-import edu.hust.itec.model.User;
+import edu.hust.itec.model.*;
 import edu.hust.itec.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -24,17 +24,23 @@ public class AuthController {
 
     //登陆
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginView() {
+    public String loginView(ModelMap model) {
+        if(!model.containsAttribute("user")) {//首次添加
+            model.addAttribute("user", new User());
+        }
+        model.addAttribute("categoryList", this.userService.getCategoryLeaves());
         return "auth/login";
     }
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(User user, BindingResult result, HttpSession session) {
+    public String login(User user, BindingResult result, HttpSession session, RedirectAttributes redirectAttributes) {
         //TODO 用户名密码错误的回显
         User resultUser = userService.getByExample(user);
         if (resultUser == null) {
             result.rejectValue("username", "user not found", "用户名或密码错误");
         }
         if(result.hasErrors()) {
+            redirectAttributes.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "user", result);
+            redirectAttributes.addFlashAttribute("user", user);
             return "redirect:/auth/login";
         }
         session.setAttribute("auth", resultUser);
@@ -69,45 +75,24 @@ public class AuthController {
         user.setPrivilege(User.Privilege.SELF);
 
         Integer userId;
-        String type = user.getType();
-        if (type.equalsIgnoreCase("TEACHER") ) {
+        Category completeCategory = this.userService.getCateogyrByName(user.getCategory().getName());
+//        Category setCategory = new Category();
+//        setCategory.setId(completeCategory.getId());
+//        user.setCategory(setCategory);
+        user.setCategory(completeCategory);
+        Category upperCategory = completeCategory.getParent();
+        if (upperCategory.getName().equalsIgnoreCase("教师") ) {
             userId = userService.save(new Teacher(user));
-        } else if (type.equalsIgnoreCase("STUDENT")) {
+        } else if (upperCategory.getName().equalsIgnoreCase("学生")) {
             userId = userService.save(new Student(user));
         } else {
-            result.rejectValue("type", "用户类型为教师或者学生");
+            result.rejectValue("category", "用户类型为教师或者学生");
         }
         if(result.hasErrors()) {
             return "redirect:/auth/login";
         }
-//        session.setAttribute("auth", this.userService.getById(userId));
         return "redirect:/admin";
     }
     //TODO 邮箱验证，找回密码
 
-    //    @RequestMapping
-//    public String authRoute(HttpServletRequest request, HttpSession session) {
-//        //save referer
-//        String referer = request.getHeader("Referer");
-//        if(referer != null) {
-//            session.setAttribute("refererAuth", referer);
-//        }
-//        //route according state
-//        User user = (User) session.getAttribute("auth");
-//        if (user == null) {
-//            return "redirect:/auth/login";//进入登陆界面
-//        } else {
-//            return "redirect:/auth/logout";//进入管理界面
-//        }
-//    }
-//    @RequestMapping(value= "back")
-//    public String back(HttpSession session) {
-//        String referer = (String)session.getAttribute("refererAuth");
-//        session.removeAttribute("refererAuth");
-//        if(referer != null) {
-//            return "redirect:" + referer;
-//        } else {
-//            return "redirect:/";
-//        }
-//    }
 }

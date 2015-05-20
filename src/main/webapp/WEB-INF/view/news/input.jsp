@@ -46,7 +46,6 @@
             </c:if>
             <c:if test="${news.id != null}">
                 <form:hidden path="id"/>
-                <%--<form:hidden path="editor.id" />--%>
                 <input type="hidden" name="_method" value="put"/>
             </c:if>
             <input type="submit" value="<c:if test="${news.id == null}">添加</c:if><c:if test="${news.id != null}">修改</c:if>">

@@ -87,9 +87,10 @@
                                             <input type="hidden" name="_method" value="put"/>
                                             <form:hidden path="id"/>
                                             <div class="form-group">
-                                                <label class="control-label">类型</label>
-                                                <form:input path="type" class="form-control" readonly="true"/>
+                                                <label class="control-label">身份</label>
+                                                <form:select path="category.id" items="${categoryList}" itemLabel="name" itemValue="id"/>
                                             </div>
+
                                             <div class="form-group">
                                                 <label class="control-label">权限</label>
                                                 <form:input path="privilege" class="form-control" readonly="true"/>
@@ -102,7 +103,7 @@
                                                 <label class="control-label">电子邮箱</label>
                                                 <form:input path="email" class="form-control"/>
                                             </div>
-                                            <c:if test="${user.type == 'TEACHER'}">
+                                            <c:if test="${user.category.parent.name == '教师'}">
                                                 教师可见
                                             <div class="form-group">
                                                 <label class="control-label">个人网站</label>
@@ -125,10 +126,13 @@
                                                 <form:textarea path="teachingCourses" class="form-control" rows="3"></form:textarea>
                                             </div>
                                             </c:if>
-                                            <c:if test="${user.type == 'STUDENT'}">
+                                            <c:if test="${user.category.parent.name == '学生'}">
                                                 <div class="form-group">
                                                     <label class="control-label">导师</label>
-                                                    <form:select path="mentor.id" items="${teachers}" itemLabel="fullname" itemValue="id"/>
+                                                    <form:select path="mentor.id" >
+                                                        <form:option value="" label="暂无" />
+                                                        <form:options items="${teachers}" itemLabel="fullname" itemValue="id"/>
+                                                    </form:select>
                                                 </div>
                                             </c:if>
                                             <div class="margiv-top-10">

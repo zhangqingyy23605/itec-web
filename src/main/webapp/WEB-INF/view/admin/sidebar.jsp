@@ -26,6 +26,7 @@
                     <span class="selected"></span>
                 </a>
             </li>
+            <c:if test="${auth.privilege.ordinal() == 0}">
             <li>
                 <a href="/admin/user">
                     <i class="icon-user"></i>
@@ -45,6 +46,7 @@
                     </li>
                 </ul>
             </li>
+            </c:if>
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>

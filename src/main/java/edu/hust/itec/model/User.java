@@ -15,18 +15,13 @@ import org.springframework.util.ReflectionUtils;
 @Table(indexes = {
         @Index(columnList = "email"),
         @Index(columnList = "privilege")
-        //,@Index(columnList = "type")
 })
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
 public class User {
     @Id
     @GeneratedValue
     private Integer id;
-
-    @NotNull
-    @Column(insertable = false, updatable = false)
-    private String type;
 
     @Column(unique = true)
     @NotBlank
@@ -43,11 +38,14 @@ public class User {
     private String email;
 
     @NotNull
-    @Enumerated
     private Privilege privilege;
 
-    public User() {
+//    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @NotNull(message = "类别不能为空")
+    private Category category;
 
+    public User() {
     }
     public User(User user) {
         ReflectionUtils.shallowCopyFieldState(user, this);
@@ -101,17 +99,13 @@ public class User {
         this.privilege = privilege;
     }
 
-    public String getType() {
-        return type;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCategory(Category category) {
+        this.category = category;
     }
-
-//    public enum Type {
-//        TEACHER, STUDENT
-//    }
 
     public enum Privilege {
         ROOT, EDITOR, SELF, FORBIDDEN

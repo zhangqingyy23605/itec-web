@@ -1,5 +1,7 @@
 package edu.hust.itec.controller;
 
+import edu.hust.itec.model.Category;
+import edu.hust.itec.model.News;
 import edu.hust.itec.model.Teacher;
 import edu.hust.itec.model.User;
 import edu.hust.itec.service.UserService;
@@ -55,19 +57,42 @@ public class UserController {
         return authUser;
     }
 
+
+    //用户列表
+    @RequestMapping(value="", method = RequestMethod.GET)
+    public String getList(Page page, ModelMap model
+            ,@RequestParam(required = false) String categoryName) {
+
+        if(categoryName != null) {
+            page.setPageNumber(1);
+        }
+
+        Collection<User> userList = this.userService.getByCategory(page);
+        model.addAttribute("userList", userList);
+
+        return "/user/list";
+    }
+
+
     @RequestMapping(value = "/{userId}/edit", method = RequestMethod.GET)
     public String userEditView(@PathVariable Integer userId, ModelMap model) {
         User user;
         if(!model.containsAttribute("user")) {//首次更新
-            user = (User)this.userService.getById(userId);
+            user = this.userService.getById(userId);
             model.addAttribute("user", user);
         } else {
             user = (User)model.get("user");
         }
-        if (user.getType().equalsIgnoreCase("STUDENT")) {
+        Category c = user.getCategory();
+        c = c.getParent();
+        String categoryName = c.getName();
+
+//        if (user.getCategory().getParent().getName().equalsIgnoreCase("学生")) {
             Collection<Teacher> teachers = this.userService.getTeachers();
             model.addAttribute("teachers", teachers);
-        }
+//        }
+
+        model.addAttribute("categoryList", this.userService.getCategoryLeaves());
         return "/user/profile";
     }
     @ModelAttribute
@@ -85,11 +110,6 @@ public class UserController {
             this.userService.update(user);
         }
         return "redirect:/admin/user/" + user.getId() + "/edit";
-    }
-
-    @RequestMapping(value="", method = RequestMethod.GET)
-    public String user() {
-        return "/user/list";
     }
 
 }

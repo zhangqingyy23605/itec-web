@@ -117,7 +117,7 @@ public abstract class CrudDAOImpl<T> implements CrudDAO<T> {
     }
 
     public Category getCategoryByName(String categoryName) {
-        return this.categoryMap.get("categoryName");
+        return this.categoryMap.get(categoryName);
     }
     private void generateCategoryMap(Category rootCategory, Map<String, Category> categoryMap) {
         Queue<Category> queue = new LinkedList<>();
