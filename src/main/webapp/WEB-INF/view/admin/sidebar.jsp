@@ -34,12 +34,12 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a href="">
+                        <a href="/admin/user?categoryName=教师">
                             <i class="icon-eyeglasses"></i>
                             教师</a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="/admin/user?categoryName=学生">
                             <i class="icon-graduation"></i>
                             学生</a>
                     </li>
