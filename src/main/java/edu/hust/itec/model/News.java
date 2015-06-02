@@ -34,7 +34,7 @@ public class News {
     @NotBlank(message = "正文不能为空")
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User editor;
     //TODO news editor 由改为 User类型的 editor_id：做用户管理的时候改进
 

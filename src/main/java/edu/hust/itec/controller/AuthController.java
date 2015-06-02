@@ -73,12 +73,8 @@ public class AuthController {
         }
         //设置默认权限
         user.setPrivilege(User.Privilege.SELF);
-
         Integer userId;
         Category completeCategory = this.userService.getCateogyrByName(user.getCategory().getName());
-//        Category setCategory = new Category();
-//        setCategory.setId(completeCategory.getId());
-//        user.setCategory(setCategory);
         user.setCategory(completeCategory);
         Category upperCategory = completeCategory.getParent();
         if (upperCategory.getName().equalsIgnoreCase("教师") ) {

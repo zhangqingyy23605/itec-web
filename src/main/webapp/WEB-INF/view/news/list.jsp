@@ -1,3 +1,4 @@
+<%@ page import="java.util.Enumeration" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -24,6 +25,7 @@
             <div style="text-align: center">暂无数据</div>
         </div>
         </c:when>
+
         <c:otherwise>
             <ul>
                 <c:forEach items="${newsList}" var="news">
@@ -39,8 +41,12 @@
                                         </li>
                                     </ul>
                                 </td>
+
+                                <c:if test="${!empty sessionScope.auth}">
                                 <td width="50px" align="right"><a href="/news/${news.id}/edit">[编辑]</a></td>
                                 <td width="50px" align="right"><a href="/news/${news.id}" class="delete">[删除]</a></td>
+                                </c:if>
+
                                 <td width="100px" align="right">[<fmt:formatDate value="${news.createTime}" pattern="yyyy-M-d"/>]</td>
                             </tr>
                             <tr>
@@ -55,7 +61,11 @@
         <div id="pagination">
             共${page.numberOfRecords}条
             第${page.pageNumber}/${page.numberOfPages}页
+
+            <c:if test="${!empty sessionScope.auth}">
             <span class="pagination_item"><a href="/news/add">添加</a></span>
+            </c:if>
+
             <span class="pagination_item"><a href="/news?pageAction=first">首页</a></span>
             <span class="pagination_item"><a href="/news?pageAction=previous">上一页</a></span>
             <c:forEach begin="1" end="${page.numberOfPages}" var="index">

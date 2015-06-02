@@ -52,7 +52,7 @@ public class NewsController {
     //新闻列表
     @RequestMapping
     public String getList(Page page, ModelMap model
-            ,@RequestParam(required = false) String categoryName) {
+            ,@RequestParam(required = false) String categoryName, HttpSession session) {
 
         if(categoryName != null) {
             page.setPageNumber(1);
@@ -63,6 +63,7 @@ public class NewsController {
 
         Category rootCategory = this.newsService.getRootCategory();
         model.addAttribute("rootCategory", rootCategory);
+
         return "/news/list";
     }
 

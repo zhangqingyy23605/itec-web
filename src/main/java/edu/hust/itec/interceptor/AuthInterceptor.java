@@ -3,7 +3,6 @@ package edu.hust.itec.interceptor;
 import edu.hust.itec.model.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,7 +22,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             response.sendRedirect("/auth/login");
             return false;
         }
-        System.out.println(request.getRequestURI());
         return true;
     }
 }
+
+//System.out.println(request.getRequestURI());
