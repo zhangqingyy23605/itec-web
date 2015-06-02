@@ -1,6 +1,8 @@
 package edu.hust.itec.model;
 
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.*;
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -35,8 +37,8 @@ public class News {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotFound( action = NotFoundAction.IGNORE )
     private User editor;
-    //TODO news editor 由改为 User类型的 editor_id：做用户管理的时候改进
 
 //    private int numberOfVisit;
 
